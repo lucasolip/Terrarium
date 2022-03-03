@@ -6,6 +6,7 @@ public class MouseFollower : MonoBehaviour
 {
     public LayerMask layerMask;
     bool mouseDown = false;
+    public float height = 1f;
 
     private void Awake()
     {
@@ -24,7 +25,7 @@ public class MouseFollower : MonoBehaviour
             {
                 mouseDown = false;
             }
-            transform.position = MathUtils.GetXZPlaneIntersection(Input.mousePosition, .5f, Camera.main);
+            transform.position = MathUtils.GetXZPlaneIntersection(Input.mousePosition, height, Camera.main);
         }
     }
 

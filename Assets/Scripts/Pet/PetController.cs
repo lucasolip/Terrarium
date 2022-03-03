@@ -6,10 +6,15 @@ public class PetController : MonoBehaviour, TickEventListener
     public TickEvent tickEvent;
     public PetMood mood;
     public PetStage stage;
+    [Header("Parameters")]
     public int hunger = 100;
     public int happiness = 100;
     public int cleanliness = 100;
     public int energy = 100;
+    [Header("Poop")]
+    public int poops = 0;
+    public float poopDistance = 1f;
+    public GameObject poopPrefab;
 
     private Material material;
 
@@ -24,18 +29,15 @@ public class PetController : MonoBehaviour, TickEventListener
     {
         Debug.Log("Pet tick");
         PetMood nextMood = mood.UpdateParameters(this, stage);
-        if (null != nextMood)
-        {
+        if (null != nextMood) {
             PetMood previousMood = mood;
             mood = nextMood;
             mood.OnEnter(stage, previousMood, material);
         }
         PetStage nextStage = stage.Update();
-        if (null != nextStage)
-        {
-            stage = nextStage;
-        }
+        if (null != nextStage) stage = nextStage;
         ClampParameters();
+        if (poops > 0 && Random.Range(0f,1f) > .8f) Poop();
     }
 
     public void ClampParameters()
@@ -50,6 +52,11 @@ public class PetController : MonoBehaviour, TickEventListener
     {
         // Instantiate pet angel prefab
         Destroy(gameObject);
+    }
+
+    private void Poop() {
+        Instantiate(poopPrefab, transform.position + (new Vector3(Random.Range(-2f,2f),0,Random.Range(-2f,2f))) * poopDistance, Quaternion.identity);
+        poops -= 1;
     }
 
     private void OnEnable()

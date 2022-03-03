@@ -11,4 +11,8 @@ public class MathUtils
         Vector3 dirNorm = ray.direction / ray.direction.y;
         return ray.origin - dirNorm * delta;
     }
+
+    public static float Map(float value, float istart, float istop, float ostart, float ostop) {
+        return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
+    }
 }

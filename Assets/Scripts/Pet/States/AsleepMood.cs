@@ -21,4 +21,9 @@ public class AsleepMood : PetMood
         }
         return null;
     }
+
+    public override void Eat(PetController pet, Food food)
+    {
+        return;
+    }
 }

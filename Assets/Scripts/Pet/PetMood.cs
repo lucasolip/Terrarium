@@ -13,6 +13,7 @@ public abstract class PetMood
         pet.happiness += food.foodModel.happiness;
         pet.energy += food.foodModel.energy;
         pet.ClampParameters();
+        pet.poops += pet.stage.poopsPerMeal;
         GameObject.Destroy(food.gameObject);
     }
 }
