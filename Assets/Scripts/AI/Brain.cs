@@ -17,7 +17,7 @@ public class Brain : MonoBehaviour
     {
         if (Physics.OverlapSphereNonAlloc(transform.position - transform.forward, 1f, collisions, foodMask) > 0)
         {
-            pet.mood.Eat(pet, collisions[0].transform.GetComponent<Food>());
+            pet.mood.Eat(pet, collisions[0].transform.GetComponent<FoodController>());
         }
     }
     private void OnDrawGizmos()

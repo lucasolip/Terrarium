@@ -124,10 +124,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7304489114056529248}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfa9e8794fe39c94782b47ab01c46114, type: 3}
+  m_Script: {fileID: 11500000, guid: e68b6e07a5789774a9179db78cb0c249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foodModel: {fileID: 11400000, guid: 5a83de9ebd0e8fd45b6cfa50644b7c43, type: 2}
+  foodModel: {fileID: 0}
 --- !u!114 &7304489114056529263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,3 +143,4 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 64
+  height: 1

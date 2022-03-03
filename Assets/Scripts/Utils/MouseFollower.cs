@@ -5,25 +5,31 @@ using UnityEngine;
 public class MouseFollower : MonoBehaviour
 {
     public LayerMask layerMask;
-    bool mouseDown = false;
+    bool drag = false;
     public float height = 1f;
+    CameraController cam;
 
     private void Awake()
     {
         layerMask = 1 << gameObject.layer;
+    }
+
+    private void Start() {
+        cam = GameObject.Find("VirtualCamera").GetComponent<CameraController>();
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), layerMask))
         {
-            mouseDown = true;
+            drag = true;
+            cam.Freeze();
         }
     }
 
     private void Update()
     {
-        if (mouseDown)
+        if (drag)
         {
             if (!Input.GetMouseButton(0))
             {
-                mouseDown = false;
+                drag = false;
             }
             transform.position = MathUtils.GetXZPlaneIntersection(Input.mousePosition, height, Camera.main);
         }
@@ -31,11 +37,17 @@ public class MouseFollower : MonoBehaviour
 
     private void OnMouseDown()
     {
-        mouseDown = true;
+        drag = true;
+        cam.Freeze();
     }
 
     private void OnMouseUp()
     {
-        mouseDown = false;
+        drag = false;
+        cam.Unfreeze();
+    }
+
+    private void OnDestroy() {
+        cam.Unfreeze();
     }
 }

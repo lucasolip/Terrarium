@@ -7,7 +7,7 @@ public abstract class PetMood
     public abstract void OnEnter(PetStage stage, PetMood previousMood, Material material);
     public abstract PetMood UpdateParameters(PetController pet, PetStage stage);
 
-    public virtual void Eat(PetController pet, Food food)
+    public virtual void Eat(PetController pet, FoodController food)
     {
         pet.hunger += food.foodModel.hunger;
         pet.happiness += food.foodModel.happiness;

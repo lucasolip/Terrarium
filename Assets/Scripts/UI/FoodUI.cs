@@ -11,6 +11,7 @@ public class FoodUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, IPo
     int currentIndex = 0;
     Image foodIcon;
     bool mouseHeld = false;
+    CameraController cam;
 
     private void Awake()
     {
@@ -18,20 +19,26 @@ public class FoodUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, IPo
         SetIcon(models[currentIndex].model);
     }
 
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        mouseHeld = false;
+    private void Start() {
+        cam = GameObject.Find("VirtualCamera").GetComponent<CameraController>();
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         mouseHeld = true;
+        cam.Freeze();
+    }
+    
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        mouseHeld = false;
+        cam.Unfreeze();
     }
 
     void InstantiateFood()
     {
         GameObject newFood = Instantiate(foodPrototype, MathUtils.GetXZPlaneIntersection(Input.mousePosition, .5f, Camera.main), Quaternion.identity);
-        newFood.GetComponent<Food>().foodModel = models[currentIndex];
+        newFood.GetComponent<FoodController>().foodModel = models[currentIndex];
     }
 
     void SetIcon(Texture icon)
