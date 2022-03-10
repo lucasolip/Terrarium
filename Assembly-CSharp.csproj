@@ -43,6 +43,7 @@
      <Compile Include="Assets\Scripts\Terrain\TerrainBlock.cs" />
      <Compile Include="Assets\Scripts\Pet\PetStage.cs" />
      <Compile Include="Assets\Scripts\Clock.cs" />
+     <Compile Include="Assets\Scripts\FoodController.cs" />
      <Compile Include="Assets\Scripts\Utils\MouseFollower.cs" />
      <Compile Include="Assets\Scripts\Pet\PetMood.cs" />
      <Compile Include="Assets\Scripts\Pet\States\FineMood.cs" />
@@ -55,11 +56,11 @@
      <Compile Include="Assets\Scripts\Utils\CameraPoser.cs" />
      <Compile Include="Assets\Scripts\AI\Brain.cs" />
      <Compile Include="Assets\Scripts\Utils\CameraController.cs" />
+     <Compile Include="Assets\Scripts\Persistence\SaveSystem.cs" />
      <Compile Include="Assets\Scripts\Terrain\TerrainController.cs" />
      <Compile Include="Assets\Scripts\Utils\MathUtils.cs" />
      <Compile Include="Assets\Scripts\PoopController.cs" />
-     <Compile Include="Assets\Scripts\SaveSystem.cs" />
-     <Compile Include="Assets\Scripts\FoodController.cs" />
+     <Compile Include="Assets\Scripts\Persistence\PetData.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\2020.3.28f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
