@@ -10,6 +10,6 @@ public class TickEvent : ScriptableObject
 
     public void Raise()
     {
-        tickEvent();
+        if (tickEvent != null) tickEvent();
     }
 }

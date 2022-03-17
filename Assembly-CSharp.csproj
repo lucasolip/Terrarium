@@ -58,9 +58,11 @@
      <Compile Include="Assets\Scripts\Utils\CameraController.cs" />
      <Compile Include="Assets\Scripts\Persistence\SaveSystem.cs" />
      <Compile Include="Assets\Scripts\Terrain\TerrainController.cs" />
+     <Compile Include="Assets\Scripts\Persistence\PetData.cs" />
      <Compile Include="Assets\Scripts\Utils\MathUtils.cs" />
      <Compile Include="Assets\Scripts\PoopController.cs" />
-     <Compile Include="Assets\Scripts\Persistence\PetData.cs" />
+     <Compile Include="Assets\Scripts\Pet\EggController.cs" />
+     <Compile Include="Assets\Scripts\UI\NameUI.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\2020.3.28f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

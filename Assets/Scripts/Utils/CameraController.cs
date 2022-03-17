@@ -48,12 +48,10 @@ public class CameraController : MonoBehaviour
 
     public void Freeze() {
         frozen = true;
-        Debug.Log("Camera frozen");
     }
 
     public void Unfreeze() {
         frozen = false;
         origin = Input.mousePosition;
-        Debug.Log("Camera free");
     }
 }
