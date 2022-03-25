@@ -228,10 +228,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e7efaec4e6a1c146bf6896a6b641684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tickEvent: {fileID: 11400000, guid: 47e4691a371a46447aeb678656c37a19, type: 2}
   fertileBlock: {fileID: 4851312451639005599, guid: ecc93fcdcee9f524da1321dde7d0c857, type: 3}
   barrenBlock: {fileID: 1319334945184053941, guid: 3bab76a3d5387a843b5e2c0b1ec4cd25, type: 3}
+  grassGameObject: {fileID: 5689774636140895599, guid: 66cdaa86e5aa602438e5c7ab463cb2a8, type: 3}
   size: 8
   blockSpacing: 2
+  fertileChance: 0.8
+  grassChance: 0.2
 --- !u!4 &175927915
 Transform:
   m_ObjectHideFlags: 0
@@ -722,7 +726,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 604341042}
-  m_LocalRotation: {x: 0.006216765, y: -0.08299965, z: 0.0005177859, w: 0.99653006}
+  m_LocalRotation: {x: 0.006216765, y: -0.082999654, z: 0.000517786, w: 0.99653006}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -796,7 +800,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 671451097}
-  m_LocalRotation: {x: 0.1481829, y: -0.08207854, z: 0.012341955, w: 0.9854708}
+  m_LocalRotation: {x: 0.1481829, y: -0.08207854, z: 0.012341956, w: 0.9854708}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1063,7 +1067,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 757239790}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.21505864, y: 0.4, z: -1.282088}
+  m_LocalPosition: {x: 0.21505865, y: 0.4, z: -1.282088}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 671451099}
@@ -1733,7 +1737,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1055184812}
-  m_LocalRotation: {x: -0.041327633, y: -0.08292987, z: -0.0034421238, w: 0.99569213}
+  m_LocalRotation: {x: -0.04132763, y: -0.08292984, z: -0.003442122, w: 0.99569213}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1881,7 +1885,7 @@ GameObject:
   - component: {fileID: 1349578226}
   - component: {fileID: 1349578230}
   - component: {fileID: 1349578231}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Egg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2429,8 +2433,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2138651603}
-  m_LocalRotation: {x: -0.041327648, y: -0.08292988, z: -0.0034421256, w: 0.99569213}
-  m_LocalPosition: {x: 0.21505864, y: 0.4, z: -1.282088}
+  m_LocalRotation: {x: -0.041327648, y: -0.08292984, z: -0.0034421221, w: 0.99569213}
+  m_LocalPosition: {x: 0.21505865, y: 0.4, z: -1.282088}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
