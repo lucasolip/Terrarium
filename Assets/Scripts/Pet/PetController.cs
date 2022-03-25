@@ -1,9 +1,8 @@
 using UnityEngine;
 
-public class PetController : MonoBehaviour, TickEventListener
+public class PetController : TickEventListener
 {
     public string petName;
-    public TickEvent tickEvent;
     public PetMood mood;
     public PetStage stage;
     [Header("Parameters")]
@@ -25,7 +24,7 @@ public class PetController : MonoBehaviour, TickEventListener
         mood.OnEnter(stage, null, material);
     }
 
-    public void OnTick()
+    public override void OnTick()
     {
         Debug.Log("Pet tick");
         PetMood nextMood = mood.UpdateParameters(this, stage);
@@ -57,16 +56,6 @@ public class PetController : MonoBehaviour, TickEventListener
     private void Poop() {
         Instantiate(poopPrefab, transform.position + (new Vector3(Random.Range(-2f,2f),0,Random.Range(-2f,2f))) * poopDistance, Quaternion.identity);
         poops -= 1;
-    }
-
-    private void OnEnable()
-    {
-        tickEvent.tickEvent += OnTick;
-    }
-
-    private void OnDisable()
-    {
-        tickEvent.tickEvent -= OnTick;
     }
     private void OnApplicationQuit()
     {

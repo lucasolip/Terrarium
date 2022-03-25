@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FertileBlock : MonoBehaviour, TerrainBlock, TickEventListener
+public class FertileBlock : TickEventListener, TerrainBlock
 {
-    public TickEvent tickEvent;
     public bool wet = true;
     public TerrainController terrain;
     public int x, y;
@@ -21,7 +20,7 @@ public class FertileBlock : MonoBehaviour, TerrainBlock, TickEventListener
         terrain.Plant(x + randomX, y + randomY, seed);
     }
 
-    public void OnTick()
+    public override void OnTick()
     {
         // TODO: After some number of ticks, wet blocks get dry
         Debug.Log("Fertile block tick");
