@@ -8,6 +8,7 @@ public class FertileBlock : TickEventListener, TerrainBlock
     public TerrainController terrain;
     public int x, y;
     public Grass grass;
+    public TreeModel tree;
 
     public void Water() {
         wet = true;

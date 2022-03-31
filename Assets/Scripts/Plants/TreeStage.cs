@@ -6,6 +6,7 @@ using UnityEngine;
 public class TreeStage : ScriptableObject
 {
     public GameObject model;
+    public FoodModel fruit;
     public TreeStage nextStage;
     public int ticksWithoutWater;
     public int stageTime;

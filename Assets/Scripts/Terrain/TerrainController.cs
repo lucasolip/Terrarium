@@ -9,12 +9,14 @@ public class TerrainController : MonoBehaviour
     public GameObject fertileBlock;
     public GameObject barrenBlock;
     public GameObject grassGameObject;
+    public GameObject[] treesGameObjects;
     public int size = 16;
     public int blockSpacing = 2;
     [Range(0f, 1f)]
     public float fertileChance = 0.8f;
     [Range(0f, 1f)]
     public float grassChance = 0.2f;
+    public float treeChance = 0.1f;
     private void Awake() {
         blocks = new TerrainBlock[size, size];
         Generate();
@@ -44,14 +46,18 @@ public class TerrainController : MonoBehaviour
             Grass seed = Instantiate(grassGameObject).GetComponent<Grass>();
             Plant(i, j, seed);
         }
+        if (treesGameObjects.Length > 0 && Random.Range(0f, 1f) < treeChance) {
+            TreeModel seed = Instantiate(treesGameObjects[Mathf.FloorToInt(Random.Range(0f, treesGameObjects.Length))]).GetComponent<TreeModel>();
+            Plant(i, j, seed);
+        }
     }
 
     public void Plant(int x, int y, Plant seed)
     {
-        Grass grassSeed = (Grass)seed;
         if (x > -1 && x < size && y > -1 && y < size && blocks[x, y] is FertileBlock) {
             FertileBlock block = (FertileBlock) blocks[x, y];
             if (seed is Grass && null == block.grass) {
+                Grass grassSeed = (Grass)seed;
                 grassSeed.transform.position = block.transform.position + new Vector3(0, 0.5f, 0);
                 grassSeed.transform.localScale.Scale(block.transform.localScale);
                 grassSeed.transform.parent = block.transform;
@@ -59,7 +65,18 @@ public class TerrainController : MonoBehaviour
                 block.grass = grassSeed;
                 return;
             }
+            if (seed is TreeModel && null == block.tree)
+            {
+                TreeModel treeSeed = (TreeModel)seed;
+                treeSeed.transform.position = block.transform.position + new Vector3(0, 0.5f, 0);
+                treeSeed.transform.localRotation = treeSeed.transform.localRotation * Quaternion.Euler(0, Random.Range(0f, 360f), 0);
+                treeSeed.transform.localScale.Scale(block.transform.localScale);
+                treeSeed.transform.parent = block.transform;
+                treeSeed.terrainBlock = block;
+                block.tree = treeSeed;
+                return;
+            }
         }
-        Destroy(grassSeed.gameObject);
+        Destroy(seed.gameObject);
     }
 }

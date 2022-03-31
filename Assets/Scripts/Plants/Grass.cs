@@ -9,7 +9,6 @@ public class Grass : Plant
     public Mesh tallGrassMesh;
     public int reproduceAge;
     public int growAge;
-    [HideInInspector]
 
     bool isTall = false;
     int age = 0;

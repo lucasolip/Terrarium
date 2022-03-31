@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aeb825a60ce6ab4ba42ff7d22a9481c, type: 3}
   m_Name: OrajoYoung
   m_EditorClassIdentifier: 
-  model: {fileID: 0}
+  model: {fileID: 2373224271580381345, guid: ef09541efffd9d84dbfd8e75239c601c, type: 3}
   nextStage: {fileID: 11400000, guid: c469d33eafbc1074ca1e9fa532244b5a, type: 2}
   ticksWithoutWater: 10
   stageTime: 5

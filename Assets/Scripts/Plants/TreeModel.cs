@@ -15,7 +15,7 @@ public class TreeModel : Plant
     }
 
     private void Awake() {
-        treeView = Instantiate(_stage.model, transform.position, Quaternion.identity, transform);
+        treeView = Instantiate(_stage.model, transform.position, transform.rotation * _stage.model.transform.rotation, transform);
     }
 
     public override void OnTick()
@@ -24,7 +24,8 @@ public class TreeModel : Plant
         growingTime++;
         if (_stage.stageTime > 0 && growingTime > _stage.stageTime) {
             _stage = _stage.nextStage;
-            treeView = _stage.model;
+            Destroy(treeView);
+            treeView = Instantiate(_stage.model, transform.position, transform.rotation * _stage.model.transform.rotation, transform);
             growingTime = 0;
         }
     }
