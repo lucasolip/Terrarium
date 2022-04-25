@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PetController : TickEventListener
 {
+    public PetChangeEvent petChangeEvent;
     public string petName;
     public PetMood mood;
     public PetStage stage;
@@ -28,6 +29,7 @@ public class PetController : TickEventListener
     {
         Debug.Log("Pet tick");
         PetMood nextMood = mood.UpdateParameters(this, stage);
+        petChangeEvent.Raise(hunger, energy, happiness, cleanliness);
         if (null != nextMood) {
             PetMood previousMood = mood;
             mood = nextMood;

@@ -53,6 +53,9 @@
     <UnityVersion>2020.3.28f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\Scripts\Plants\TreeStage.cs" />
     <Compile Include="Assets\Scripts\Pet\States\SickMood.cs" />
     <Compile Include="Assets\Scripts\Terrain\FertileBlock.cs" />
@@ -62,8 +65,11 @@
     <Compile Include="Assets\Scripts\Pet\EggController.cs" />
     <Compile Include="Assets\Scripts\Terrain\TerrainBlock.cs" />
     <Compile Include="Assets\Scripts\Pet\PetStage.cs" />
+    <Compile Include="Assets\Scripts\UI\MouseController.cs" />
     <Compile Include="Assets\Scripts\Clock.cs" />
+    <Compile Include="Assets\Scripts\Utils\MouseHandler.cs" />
     <Compile Include="Assets\Scripts\FoodController.cs" />
+    <Compile Include="Assets\Scripts\Events\MouseHandlerCreatedEventListener.cs" />
     <Compile Include="Assets\Scripts\Utils\MouseFollower.cs" />
     <Compile Include="Assets\Scripts\Pet\PetMood.cs" />
     <Compile Include="Assets\Scripts\Plants\Plant.cs" />
@@ -77,6 +83,7 @@
     <Compile Include="Assets\Scripts\Events\TickEvent.cs" />
     <Compile Include="Assets\Scripts\Utils\CameraPoser.cs" />
     <Compile Include="Assets\Scripts\UI\NameUI.cs" />
+    <Compile Include="Assets\Scripts\Events\MouseHandlerCreatedEvent.cs" />
     <Compile Include="Assets\Scripts\AI\Brain.cs" />
     <Compile Include="Assets\Scripts\Utils\CameraController.cs" />
     <Compile Include="Assets\Scripts\Persistence\SaveSystem.cs" />
@@ -85,9 +92,14 @@
     <Compile Include="Assets\Scripts\Utils\MathUtils.cs" />
     <Compile Include="Assets\Scripts\PoopController.cs" />
     <Compile Include="Assets\Scripts\Plants\FruitTree.cs" />
+    <Compile Include="Assets\Scripts\EndWorldCheckController.cs" />
+    <Compile Include="Assets\Scripts\UI\PetParametersUI.cs" />
+    <Compile Include="Assets\Scripts\Events\PetChangeEvent.cs" />
+    <Compile Include="Assets\Scripts\Events\PetChangeEventListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\URP_ShaderCodeTemplates-main\URP_TransparentUnlitTemplate.shader" />
+    <None Include="Assets\Shaders\URP_ShaderCodeTemplates-main\GrassLit.shader" />
     <None Include="Assets\Shaders\URP_ShaderCodeTemplates-main\PBRInput.hlsl" />
     <None Include="Assets\Shaders\URP_ShaderCodeTemplates-main\URP_Unlit+Template.shader" />
     <None Include="Assets\Shaders\URP_ShaderCodeTemplates-main\URP_UnlitTemplate.shader" />
@@ -101,8 +113,9 @@
     <None Include="Assets\Shaders\NewUnlitShader.shader" />
     <None Include="Assets\Shaders\URP_ShaderCodeTemplates-main\URP_DiffuseLitTemplate.shader" />
     <None Include="Assets\Shaders\remap.cginc" />
+    <None Include="Assets\Shaders\URP_ShaderCodeTemplates-main\noiseSimplex.cginc" />
     <None Include="Assets\Shaders\URP_ShaderCodeTemplates-main\URP_SimpleLitTemplate.shader" />
-    <None Include="Assets\Shaders\URP_ShaderCodeTemplates-main\SuperLeaves.shader" />
+    <None Include="Assets\Shaders\URP_ShaderCodeTemplates-main\LeavesLit.shader" />
     <None Include="Assets\Shaders\URP_ShaderCodeTemplates-main\PBRSurface.hlsl" />
   </ItemGroup>
   <ItemGroup>

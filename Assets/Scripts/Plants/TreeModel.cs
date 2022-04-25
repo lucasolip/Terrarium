@@ -4,29 +4,33 @@ using UnityEngine;
 
 public class TreeModel : Plant
 {
-    public TreeStage _stage;
+    public GameObject foodGameobject;
+    public TreeStage stage;
     int growingTime = 0;
     GameObject treeView;
 
-    TreeStage stage {
-        set {
-            _stage = value;
-        }
-    }
-
     private void Awake() {
-        treeView = Instantiate(_stage.model, transform.position, transform.rotation * _stage.model.transform.rotation, transform);
+        treeView = Instantiate(stage.model, transform.position, transform.rotation * stage.model.transform.rotation, transform);
     }
 
     public override void OnTick()
     {
         Debug.Log("Tree tick");
         growingTime++;
-        if (_stage.stageTime > 0 && growingTime > _stage.stageTime) {
-            _stage = _stage.nextStage;
+        if (stage.stageTime > 0 && growingTime > stage.stageTime) {
+            stage = stage.nextStage;
             Destroy(treeView);
-            treeView = Instantiate(_stage.model, transform.position, transform.rotation * _stage.model.transform.rotation, transform);
+            treeView = Instantiate(stage.model, transform.position, transform.rotation * stage.model.transform.rotation, transform);
             growingTime = 0;
+        }
+        if (stage.isFruitTree) {
+            FruitTree fruitTree = treeView.GetComponent<FruitTree>();
+            if (!fruitTree.fruitGrown && growingTime > fruitTree.fruitGrowTime) {
+                fruitTree.GrowFruit(foodGameobject, stage.fruit);
+            } else if (fruitTree.fruitGrown && growingTime > fruitTree.fruitGrowTime + fruitTree.fruitRipeTime) {
+                fruitTree.RipeFruit();
+                growingTime = 0;
+            }
         }
     }
 

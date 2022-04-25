@@ -40,8 +40,6 @@ public class Grass : Plant
 
     void Reproduce()
     {
-        GameObject newObject = Instantiate(grassGameobject);
-        Plant newGrass = newObject.GetComponent<Grass>();
-        terrainBlock.PlantNeighbour(newGrass);
+        terrainBlock.PlantNeighbour(grassGameobject);
     }
 }

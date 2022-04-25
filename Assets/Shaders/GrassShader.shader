@@ -60,20 +60,9 @@ Shader "Custom/GrassShader"
 				fixed4 noise = tex2Dlod(_WindTexture, float4(worldCoord.xz * _WindTexture_ST, 0.0, 0.0)) * _WindIntensity;
 				float xNoise = map(snoise(float2(worldCoord.x, _Time.y* _WindDensity)), -1, 1, -_WindStrength, _WindStrength);
 				float zNoise = map(snoise(float2(worldCoord.z, _Time.y* _WindDensity)), -1, 1, -_WindStrength, _WindStrength);
-				//float xNoise = map(noise.x, -1, 1, -_WindStrength, _WindStrength);
-				//float zNoise = map(noise.y, -1, 1, -_WindStrength, _WindStrength);
 				v.vertex.xyz += float3(xNoise, 0.0, zNoise) * 0.01 * v.uv.y;
 				o.pos = UnityObjectToClipPos(v.vertex);
 				o.uv = v.uv.xy;
-
-				// billboard mesh towards camera
-				/*float3 vpos = mul((float3x3)unity_ObjectToWorld, v.vertex.xyz);
-				
-                float4 worldCoord = float4(unity_ObjectToWorld._m03, unity_ObjectToWorld._m13, unity_ObjectToWorld._m23, 1);
-				float4 viewPos = mul(UNITY_MATRIX_V, worldCoord) + float4(vpos, 0);
-				float4 outPos = mul(UNITY_MATRIX_P, viewPos);
-
-				o.pos = outPos;*/
 
 				UNITY_TRANSFER_FOG(o,o.vertex);
 				return o;
@@ -83,7 +72,7 @@ Shader "Custom/GrassShader"
 			{
 				// sample the texture
 				fixed4 col = tex2D(_MainTex, i.uv);
-				float4 color = _Color * col.w;
+				float4 color = _Color * col;
 				// apply fog
 				UNITY_APPLY_FOG(i.fogCoord, color);
 				return color;

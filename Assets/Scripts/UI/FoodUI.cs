@@ -34,11 +34,18 @@ public class FoodUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, IPo
         mouseHeld = false;
         cam.Unfreeze();
     }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (mouseHeld) InstantiateFood();
+        mouseHeld = false;
+    }
 
     void InstantiateFood()
     {
         GameObject newFood = Instantiate(foodPrototype, MathUtils.GetXZPlaneIntersection(Input.mousePosition, .5f, Camera.main), Quaternion.identity);
+        newFood.GetComponent<Rigidbody>().isKinematic = false;
         newFood.GetComponent<FoodController>().foodModel = models[currentIndex];
+        newFood.GetComponent<MouseFollower>().enabled = true;
     }
 
     void SetIcon(Texture icon)
@@ -65,12 +72,4 @@ public class FoodUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, IPo
         SetIcon(models[currentIndex].model);
     }
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (mouseHeld)
-        {
-            InstantiateFood();
-        }
-        mouseHeld = false;
-    }
 }

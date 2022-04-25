@@ -45,4 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tickEvent: {fileID: 11400000, guid: 47e4691a371a46447aeb678656c37a19, type: 2}
   terrainBlock: {fileID: 0}
-  _stage: {fileID: 11400000, guid: 24947aec38c7a584db3e29434c1f7c6f, type: 2}
+  foodGameobject: {fileID: 7304489114056529248, guid: 62a72a98fc5dab744a518c2a24f76aff, type: 3}
+  stage: {fileID: 11400000, guid: 24947aec38c7a584db3e29434c1f7c6f, type: 2}

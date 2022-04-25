@@ -10,4 +10,5 @@ public class TreeStage : ScriptableObject
     public TreeStage nextStage;
     public int ticksWithoutWater;
     public int stageTime;
+    public bool isFruitTree;
 }

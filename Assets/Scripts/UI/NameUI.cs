@@ -9,7 +9,6 @@ public class NameUI : MonoBehaviour
     Text input;
     public event Action inputSent;
     private void Awake() {
-        gameObject.SetActive(false);
         input = transform.Find("Text").GetComponent<Text>();
     }
 

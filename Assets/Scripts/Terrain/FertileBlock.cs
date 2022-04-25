@@ -14,8 +14,10 @@ public class FertileBlock : TickEventListener, TerrainBlock
         wet = true;
     }
 
-    public void PlantNeighbour(Plant seed)
+    public void PlantNeighbour(GameObject grassGameObject)
     {
+        Grass seed = Instantiate(grassGameObject, grassGameObject.transform.position,
+                Quaternion.Euler(0, Random.Range(0f, 360f), 0)).GetComponent<Grass>();
         int randomX = 2 * Random.Range(0, 1) - 1;
         int randomY = 2 * Random.Range(0, 1) - 1;
         terrain.Plant(x + randomX, y + randomY, seed);

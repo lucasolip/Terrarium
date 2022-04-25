@@ -50,7 +50,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5689774636140895599}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 2
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -95,13 +95,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b8141f5cb02a8429b0023b17e13bcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grassGameobject: {fileID: 5689774636140895599}
   tickEvent: {fileID: 11400000, guid: 47e4691a371a46447aeb678656c37a19, type: 2}
+  terrainBlock: {fileID: 0}
+  grassGameobject: {fileID: 5689774636140895599}
   shortGrassMesh: {fileID: -903431235161497164, guid: c7302b462f51e074092a31479809c831, type: 3}
   tallGrassMesh: {fileID: -91034527425955359, guid: 62f1480fbe4c08249808d7e3ce1c3d95, type: 3}
   reproduceAge: 4
   growAge: 2
-  terrainBlock: {fileID: 0}
 --- !u!65 &3632973296278968250
 BoxCollider:
   m_ObjectHideFlags: 0

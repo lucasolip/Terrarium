@@ -12,6 +12,9 @@ public class CameraController : MonoBehaviour
     public float minY = 0.05f;
     [Range(0f,1f)]
     public float maxY = 1f;
+    public float minZoom = 1f;
+    public float maxZoom = 10f;
+    public float zoomSpeed = 1f;
     private Vector3 origin;
     private Vector3 difference;
     private Vector3 resetCamera;
@@ -42,6 +45,10 @@ public class CameraController : MonoBehaviour
                 cam.m_YAxis.Value -= difference.y * ySensitivity;
                 cam.m_YAxis.Value = Mathf.Clamp(cam.m_YAxis.Value, minY, maxY);
                 origin = Input.mousePosition;
+            }
+            if (Input.GetAxis("Mouse ScrollWheel") != 0f)
+            {
+                cam.m_Lens.OrthographicSize = Mathf.Clamp(cam.m_Lens.OrthographicSize - Input.GetAxis("Mouse ScrollWheel") * zoomSpeed, minZoom, maxZoom);
             }
         }
     }

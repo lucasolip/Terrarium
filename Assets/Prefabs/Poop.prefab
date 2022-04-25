@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3401747424672823125}
   - component: {fileID: 5950867374741255427}
   - component: {fileID: 7064734257799626148}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Poop
   m_TagString: Untagged
   m_Icon: {fileID: 0}

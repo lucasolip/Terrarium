@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoopController : MonoBehaviour
+public class PoopController : MouseHandler
 {
-    private void OnMouseDown() {
+    public override void Released()
+    {
+    }
+
+    public override void Clicked()
+    {
         Destroy(gameObject);
     }
 }
