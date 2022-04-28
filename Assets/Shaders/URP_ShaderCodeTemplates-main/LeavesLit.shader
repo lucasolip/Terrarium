@@ -1,4 +1,4 @@
-Shader "Lucas/Leaves" {
+Shader "Lucas/LeavesLit" {
 	Properties {
 		[MainTexture] _BaseMap("Base Map (RGB) Smoothness / Alpha (A)", 2D) = "white" {}
 		[MainColor]   _BaseColor("Base Color", Color) = (1, 1, 1, 1)

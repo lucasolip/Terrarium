@@ -1,5 +1,5 @@
 
-Shader "Custom/GrassShader"
+Shader "Lucas/GrassUnlit"
 {
     Properties
 	{

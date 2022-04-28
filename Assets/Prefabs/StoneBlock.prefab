@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1992611403029119475}
   - component: {fileID: 6654215550317046961}
   - component: {fileID: 3886255696581763488}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: StoneBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,6 +62,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 760a7d4e4ad1a2c49adac9e1d2ab7c07, type: 2}
+  - {fileID: 2100000, guid: b78f02f0c45194e48815cdf217bf5dc4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

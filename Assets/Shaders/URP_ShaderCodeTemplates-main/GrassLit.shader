@@ -1,12 +1,5 @@
-// Example Shader for Universal RP
-// Written by @Cyanilux
-// https://www.cyanilux.com/tutorials/urp-shader-code
-
 Shader "Lucas/GrassLit" {
 	Properties {
-		// Sorry the inspector is a little messy, but I'd rather not rely on a Custom ShaderGUI
-		// or the one used by the Lit/Shader, as then adding new properties won't show
-		// Tried to organise it somewhat, with spacing to help separate related parts.
 
 		[MainTexture] _BaseMap("Base Map (RGB) Smoothness / Alpha (A)", 2D) = "white" {}
 		[MainColor]   _BaseColor("Base Color", Color) = (1, 1, 1, 1)
@@ -292,7 +285,7 @@ Shader "Lucas/GrassLit" {
 			ZTest LEqual
 
 			HLSLPROGRAM
-			#pragma vertex ShadowPassVertex
+			#pragma vertex DisplacedShadowPassVertex
 			#pragma fragment ShadowPassFragment
 
 			// Material Keywords
@@ -312,21 +305,26 @@ Shader "Lucas/GrassLit" {
 			#include "Packages/com.unity.render-pipelines.universal/Shaders/ShadowCasterPass.hlsl"
 
 			// Note if we do any vertex displacement, we'll need to change the vertex function. e.g. :
-			/*
-			#pragma vertex DisplacedShadowPassVertex (instead of ShadowPassVertex above)
+			
+			
 			
 			Varyings DisplacedShadowPassVertex(Attributes input) {
 				Varyings output = (Varyings)0;
 				UNITY_SETUP_INSTANCE_ID(input);
 				
 				// Example Displacement
-				input.positionOS += float4(0, _SinTime.y, 0, 0);
+				_WindTexture_ST.xy += _Time.y * _WindDensity;
+				float4 worldCoord = mul(unity_ObjectToWorld, input.positionOS);
+				float4 noise = tex2Dlod(_WindTexture, float4(worldCoord.xz * _WindTexture_ST, 0.0, 0.0)) * _WindIntensity;
+				float xNoise = map(snoise(float2(worldCoord.x, _Time.y* _WindDensity)), -1, 1, -_WindStrength, _WindStrength);
+				float zNoise = map(snoise(float2(worldCoord.z, _Time.y* _WindDensity)), -1, 1, -_WindStrength, _WindStrength);
+				input.positionOS.xyz += float3(xNoise, 0.0, zNoise) * 0.01 * input.texcoord.y;
 				
 				output.uv = TRANSFORM_TEX(input.texcoord, _BaseMap);
 				output.positionCS = GetShadowPositionHClip(input);
 				return output;
 			}
-			*/
+			
 			ENDHLSL
 		}
 

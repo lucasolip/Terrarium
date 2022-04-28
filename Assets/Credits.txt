@@ -1,1 +1,8 @@
-Bar UI: https://opengameart.org/content/minimalist-bar-system-0
+Sprites and UI:
+	Bar UI: https://opengameart.org/content/minimalist-bar-system-0
+Materials
+	Stylized Grass 3: https://3dtextures.me/2021/03/19/stylized-grass-003/
+	Stylized Rocks: https://3dtextures.me/2020/07/07/stylized-rocks-001/
+	Rock Moss: https://3dtextures.me/2021/06/12/rock-moss-001/
+Shaders
+	URP base code: https://www.cyanilux.com/tutorials/urp-shader-code

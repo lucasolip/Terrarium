@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 477572793403504732}
   - component: {fileID: 3878490397071808281}
   - component: {fileID: 1006137800925805317}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: DirtBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,6 +62,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: d49852e7a85eac04984dedbb8839b0b1, type: 2}
+  - {fileID: 2100000, guid: b78f02f0c45194e48815cdf217bf5dc4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
