@@ -59,6 +59,7 @@
     <Compile Include="Assets\Scripts\Plants\TreeStage.cs" />
     <Compile Include="Assets\Scripts\Pet\States\SickMood.cs" />
     <Compile Include="Assets\Scripts\Terrain\FertileBlock.cs" />
+    <Compile Include="Assets\Scripts\Events\PetChangeEventListener.cs" />
     <Compile Include="Assets\Scripts\Pet\PetController.cs" />
     <Compile Include="Assets\Scripts\Events\TickEventListener.cs" />
     <Compile Include="Assets\Scripts\Plants\Grass.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Assets\Scripts\Terrain\TerrainBlock.cs" />
     <Compile Include="Assets\Scripts\Pet\PetStage.cs" />
     <Compile Include="Assets\Scripts\UI\MouseController.cs" />
+    <Compile Include="Assets\Scripts\EndWorldCheckController.cs" />
     <Compile Include="Assets\Scripts\Clock.cs" />
     <Compile Include="Assets\Scripts\Utils\MouseHandler.cs" />
     <Compile Include="Assets\Scripts\FoodController.cs" />
@@ -78,6 +80,7 @@
     <Compile Include="Assets\Scripts\UI\FoodUI.cs" />
     <Compile Include="Assets\Scripts\Terrain\BarrenBlock.cs" />
     <Compile Include="Assets\Scripts\Items\FoodModel.cs" />
+    <Compile Include="Assets\Scripts\Events\PetChangeEvent.cs" />
     <Compile Include="Assets\Scripts\Pet\States\AsleepMood.cs" />
     <Compile Include="Assets\Scripts\Plants\TreeModel.cs" />
     <Compile Include="Assets\Scripts\Events\TickEvent.cs" />
@@ -89,13 +92,11 @@
     <Compile Include="Assets\Scripts\Persistence\SaveSystem.cs" />
     <Compile Include="Assets\Scripts\Terrain\TerrainController.cs" />
     <Compile Include="Assets\Scripts\Persistence\PetData.cs" />
+    <Compile Include="Assets\Scripts\UI\PetParametersUI.cs" />
     <Compile Include="Assets\Scripts\Utils\MathUtils.cs" />
     <Compile Include="Assets\Scripts\PoopController.cs" />
     <Compile Include="Assets\Scripts\Plants\FruitTree.cs" />
-    <Compile Include="Assets\Scripts\EndWorldCheckController.cs" />
-    <Compile Include="Assets\Scripts\UI\PetParametersUI.cs" />
-    <Compile Include="Assets\Scripts\Events\PetChangeEvent.cs" />
-    <Compile Include="Assets\Scripts\Events\PetChangeEventListener.cs" />
+    <Compile Include="Assets\Scripts\Utils\CameraTargetController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\URP_ShaderCodeTemplates-main\URP_TransparentUnlitTemplate.shader" />

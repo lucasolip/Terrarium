@@ -9,13 +9,17 @@ public class PetParametersUI : PetChangeEventListener
     private RectTransform energyBar;
     private RectTransform happinessBar;
     private RectTransform cleanlinessBar;
+    private Transform bars;
+    private bool shown = false;
 
     private void Start()
     {
-        hungerBar = transform.GetChild(0).Find("Foreground").GetComponent<RectTransform>();
-        energyBar = transform.GetChild(1).Find("Foreground").GetComponent<RectTransform>();
-        happinessBar = transform.GetChild(2).Find("Foreground").GetComponent<RectTransform>();
-        cleanlinessBar = transform.GetChild(3).Find("Foreground").GetComponent<RectTransform>();
+        bars = transform.GetChild(0);
+        hungerBar = bars.GetChild(0).Find("Foreground").GetComponent<RectTransform>();
+        energyBar = bars.GetChild(1).Find("Foreground").GetComponent<RectTransform>();
+        happinessBar = bars.GetChild(2).Find("Foreground").GetComponent<RectTransform>();
+        cleanlinessBar = bars.GetChild(3).Find("Foreground").GetComponent<RectTransform>();
+        bars.gameObject.SetActive(shown);
     }
     private void SetScale(RectTransform rectTransform, float value)
     {
@@ -30,5 +34,11 @@ public class PetParametersUI : PetChangeEventListener
         SetScale(energyBar, energy / 100f);
         SetScale(happinessBar, happiness / 100f);
         SetScale(cleanlinessBar, cleanliness / 100f);
+    }
+
+    public void Show()
+    {
+        shown = !shown;
+        bars.gameObject.SetActive(shown);
     }
 }

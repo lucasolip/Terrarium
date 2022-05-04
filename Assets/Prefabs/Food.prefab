@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 7304489114056529257}
   - component: {fileID: 7304489114056529261}
   - component: {fileID: 7304489114056529260}
-  - component: {fileID: 7304489114056529251}
   - component: {fileID: 7304489114056529250}
   - component: {fileID: 7304489114056529249}
   - component: {fileID: 7304489114056529263}
   - component: {fileID: -8491492224925157464}
+  - component: {fileID: -747943118426051611}
   m_Layer: 6
   m_Name: Food
   m_TagString: Untagged
@@ -91,18 +91,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7304489114056529251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7304489114056529248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67465c682a75c5942b599edad8966136, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &7304489114056529250
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -159,3 +147,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &-747943118426051611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7304489114056529248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67465c682a75c5942b599edad8966136, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
