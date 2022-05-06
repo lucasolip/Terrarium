@@ -2,28 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AsleepMood : PetMood
-{
+public class AsleepMood : PetMood {
     public PetMood previousMood;
 
-    public override void OnEnter(PetStage stage, PetMood previousMood, Material material)
-    {
+    public override void OnEnter(PetStage stage, PetMood previousMood, Material material) {
         this.previousMood = previousMood;
         material.mainTexture = stage.asleepModel;
     }
 
-    public override PetMood UpdateParameters(PetController pet, PetStage stage)
-    {
+    public override void ComputeNecessities(PetController pet, PetStage stage) {
         pet.energy += stage.energyRecoveryAsleep;
-        if (pet.energy > 99)
-        {
+    }
+
+    public override PetMood CheckMood(PetController pet, PetStage stage) {
+        if (pet.energy > 99) {
             return previousMood;
         }
         return null;
     }
 
-    public override void Eat(PetController pet, FoodController food)
-    {
+    public override void Eat(PetController pet, FoodController food) {
         return;
     }
 }

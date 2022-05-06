@@ -5,7 +5,14 @@ using UnityEngine;
 public abstract class PetMood
 {
     public abstract void OnEnter(PetStage stage, PetMood previousMood, Material material);
-    public abstract PetMood UpdateParameters(PetController pet, PetStage stage);
+    public virtual PetMood UpdateParameters(PetController pet, PetStage stage) {
+        ComputeNecessities(pet, stage);
+        return CheckMood(pet, stage);
+    }
+
+    public abstract void ComputeNecessities(PetController pet, PetStage stage);
+
+    public abstract PetMood CheckMood(PetController pet, PetStage stage);
 
     public virtual void Eat(PetController pet, FoodController food)
     {
@@ -15,5 +22,6 @@ public abstract class PetMood
         pet.ClampParameters();
         pet.poops += pet.stage.poopsPerMeal;
         GameObject.Destroy(food.gameObject);
+        pet.CheckMood();
     }
 }

@@ -34,4 +34,9 @@ public class TreeModel : Plant
         }
     }
 
+    public override void Chop() {
+        terrainBlock.tree = null;
+        Destroy(gameObject);
+    }
+
 }

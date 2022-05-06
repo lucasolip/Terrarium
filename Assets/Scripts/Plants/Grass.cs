@@ -42,4 +42,10 @@ public class Grass : Plant
     {
         terrainBlock.PlantNeighbour(grassGameobject);
     }
+
+    public override void Chop()
+    {
+        terrainBlock.grass = null;
+        Destroy(gameObject);
+    }
 }

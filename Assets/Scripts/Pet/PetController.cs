@@ -29,16 +29,26 @@ public class PetController : TickEventListener
     {
         Debug.Log("Pet tick");
         PetMood nextMood = mood.UpdateParameters(this, stage);
-        petChangeEvent.Raise(hunger, energy, happiness, cleanliness);
         if (null != nextMood) {
             PetMood previousMood = mood;
             mood = nextMood;
             mood.OnEnter(stage, previousMood, material);
         }
+        petChangeEvent.Raise(hunger, energy, happiness, cleanliness);
         PetStage nextStage = stage.Update();
         if (null != nextStage) stage = nextStage;
         ClampParameters();
         if (poops > 0 && Random.Range(0f,1f) > .8f) Poop();
+    }
+
+    public void CheckMood() {
+        PetMood nextMood = mood.CheckMood(this, stage);
+        if (null != nextMood) {
+            PetMood previousMood = mood;
+            mood = nextMood;
+            mood.OnEnter(stage, previousMood, material);
+        }
+        petChangeEvent.Raise(hunger, energy, happiness, cleanliness);
     }
 
     public void ClampParameters()
@@ -52,11 +62,12 @@ public class PetController : TickEventListener
     public void Die()
     {
         // Instantiate pet angel prefab
+        Debug.Log("Pet died :(");
         Destroy(gameObject);
     }
 
     private void Poop() {
-        Instantiate(poopPrefab, transform.position + (new Vector3(Random.Range(-2f,2f),0,Random.Range(-2f,2f))) * poopDistance, Quaternion.identity);
+        Instantiate(poopPrefab, transform.position + (new Vector3(Random.Range(-2f,2f),0,Random.Range(-2f,2f))) * poopDistance, poopPrefab.transform.rotation);
         poops -= 1;
     }
     private void OnApplicationQuit()

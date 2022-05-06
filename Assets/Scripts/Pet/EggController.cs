@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EggController : MouseHandler
 {
+    public PetBornEvent petBornEvent;
     public GameObject petGameobject;
     public Transform cameraTarget;
     public NameUI inputField;
@@ -17,17 +18,20 @@ public class EggController : MouseHandler
         string petName = inputField.Dispose();
         GameObject pet = Instantiate(petGameobject, transform.position, Quaternion.identity);
         cameraTarget.position = pet.transform.position;
-        pet.GetComponent<PetController>().petName = petName;
+        PetController petController = pet.GetComponent<PetController>();
+        petController.petName = petName;
         //GameObject.Find("CameraTarget").GetComponent<CameraTargetController>().target = pet.transform;
-        Transform canvas = GameObject.Find("Canvas").transform;
-        canvas.GetChild(0).gameObject.SetActive(true);
-        canvas.GetChild(1).gameObject.SetActive(true);
+        petBornEvent.Raise(petController);
         Destroy(gameObject);
     }
 
     public override void Clicked()
     {
         inputField.Show();
+    }
+
+    public override void Dragged()
+    {
     }
 
     public override void Released()

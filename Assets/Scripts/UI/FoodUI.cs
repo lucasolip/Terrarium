@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class FoodUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, IPointerExitHandler
+public class FoodUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, IPointerExitHandler, PetBornEventListener
 {
+    public PetBornEvent petBornEvent;
     public FoodModel[] models;
     public GameObject foodPrototype;
     int currentIndex = 0;
@@ -21,18 +22,18 @@ public class FoodUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, IPo
 
     private void Start() {
         cam = GameObject.Find("VirtualCamera").GetComponent<CameraController>();
+        petBornEvent.petBornEvent += OnPetBorn;
+        gameObject.SetActive(false);
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         mouseHeld = true;
-        cam.Freeze();
     }
     
     public void OnPointerUp(PointerEventData eventData)
     {
         mouseHeld = false;
-        cam.Unfreeze();
     }
     public void OnPointerExit(PointerEventData eventData)
     {
@@ -70,6 +71,14 @@ public class FoodUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, IPo
     {
         currentIndex = Mathf.Abs(currentIndex - 1) % models.Length;
         SetIcon(models[currentIndex].model);
+    }
+
+    private void OnDestroy() {
+        petBornEvent.petBornEvent -= OnPetBorn;
+    }
+
+    public void OnPetBorn(PetController pet) {
+        gameObject.SetActive(true);
     }
 
 }
