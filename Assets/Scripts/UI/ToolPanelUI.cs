@@ -12,6 +12,7 @@ public class ToolPanelUI : MonoBehaviour
     Image mainIcon;
     bool shown = false;
     private ShowUIAudioManager showAudioManager;
+    private UIAnimator animator;
     void Start()
     {
         mainIcon = transform.Find("ShowButton").GetComponent<Image>();
@@ -21,55 +22,42 @@ public class ToolPanelUI : MonoBehaviour
         targetPosition = selectedTool.anchoredPosition.x;
         if (mouseController == null) mouseController = GameObject.Find("Canvas").GetComponent<MouseController>();
         showAudioManager = GetComponent<ShowUIAudioManager>();
-    }
-
-    private void Update()
-    {
-        if (Mathf.Abs(targetPosition - selectedTool.anchoredPosition.x) > 0.01f) {
-            Vector2 newPosition = selectedTool.anchoredPosition;
-            newPosition.x = Mathf.Lerp(selectedTool.anchoredPosition.x, targetPosition, 0.1f);
-            selectedTool.anchoredPosition = newPosition;
-        }
+        animator = GetComponent<UIAnimator>();
     }
 
     public void Show()
     {
-        StopAllCoroutines();
-        if (!shown) StartCoroutine("ShowUI");
-        else StartCoroutine("HideUI");
+        if (!shown) ShowUI();
+        else HideUI();
     }
 
     public void Selected(GameObject toolButton)
     {
         mainIcon.sprite = toolButton.transform.Find("Icon").GetComponent<Image>().sprite;
-        targetPosition = toolButton.GetComponent<RectTransform>().anchoredPosition.x - 22;
+        Vector3 toolPosition = toolButton.GetComponent<RectTransform>().anchoredPosition;
+        toolPosition.x -= 22;
+        animator.Move(selectedTool, toolPosition);
         mouseController.SetTool(toolButton.GetComponent<ToolController>());
     }
 
-    private IEnumerator HideUI()
+    private void HideUI()
     {
         showAudioManager.HideSound();
         shown = false;
-        while (toolBar.localScale.x > 0.01) {
-            Vector3 scale = toolBar.localScale;
-            scale.x = Mathf.Lerp(toolBar.localScale.x, 0, 0.1f);
-            toolBar.localScale = scale;
-            yield return null;
-        }
-        toolBar.gameObject.SetActive(false);
+        animator.ScaleOut(toolBar.gameObject, HideToolbar);
     }
 
-    private IEnumerator ShowUI()
+    private void ShowUI()
     {
         showAudioManager.ShowSound();
         shown = true;
         toolBar.gameObject.SetActive(true);
-        while (toolBar.localScale.x < 0.99) {
-            Vector3 scale = toolBar.localScale;
-            scale.x = Mathf.Lerp(toolBar.localScale.x, 1, 0.1f);
-            toolBar.localScale = scale;
-            yield return null;
-        }
+        animator.ScaleIn(toolBar.gameObject);
+    }
+
+    private void HideToolbar()
+    {
+        toolBar.gameObject.SetActive(false);
     }
 
 }

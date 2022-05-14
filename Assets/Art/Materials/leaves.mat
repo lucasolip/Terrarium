@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Leaves
+  m_Name: leaves
   m_Shader: {fileID: 4800000, guid: 1636eb29b5c27a74abb7afe1b6243bbc, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4

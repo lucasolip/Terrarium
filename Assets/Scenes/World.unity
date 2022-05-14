@@ -2943,6 +2943,7 @@ GameObject:
   - component: {fileID: 806970629}
   - component: {fileID: 806970630}
   - component: {fileID: 806970631}
+  - component: {fileID: 806970632}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -3172,6 +3173,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &806970632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806970623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0863f9a6ce854bc468073925d741c403, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.5
+  inDuration: 0.5
+  outDuration: 0.5
+  ease: 9
+  inEase: 0
+  outEase: 0
+  inTarget: {x: 0, y: 0, z: 0}
+  outTarget: {x: 0, y: 0, z: 0}
 --- !u!1 &808128723
 GameObject:
   m_ObjectHideFlags: 0
@@ -4524,6 +4545,7 @@ GameObject:
   - component: {fileID: 1293321861}
   - component: {fileID: 1293321862}
   - component: {fileID: 1293321863}
+  - component: {fileID: 1293321864}
   m_Layer: 5
   m_Name: ParameterPanel
   m_TagString: Untagged
@@ -4589,6 +4611,26 @@ MonoBehaviour:
   showSound: {fileID: 8300000, guid: cf1330b6a10acff41ba309ba271f47c2, type: 3}
   hideSound: {fileID: 8300000, guid: 4dd1079892066a04c931588ae19f4c5b, type: 3}
   uiAudioEvent: {fileID: 11400000, guid: b825c9540bf21d64e8c4e2631689215f, type: 2}
+--- !u!114 &1293321864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1293321859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0863f9a6ce854bc468073925d741c403, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.5
+  inDuration: 0.5
+  outDuration: 0.5
+  ease: 0
+  inEase: 32
+  outEase: 6
+  inTarget: {x: 1, y: 1, z: 1}
+  outTarget: {x: 1, y: 0, z: 1}
 --- !u!1 &1297994162
 GameObject:
   m_ObjectHideFlags: 0
@@ -6086,6 +6128,7 @@ GameObject:
   - component: {fileID: 1699541199}
   - component: {fileID: 1699541198}
   - component: {fileID: 1699541200}
+  - component: {fileID: 1699541201}
   m_Layer: 5
   m_Name: ToolPanel
   m_TagString: Untagged
@@ -6150,6 +6193,26 @@ MonoBehaviour:
   showSound: {fileID: 8300000, guid: cf1330b6a10acff41ba309ba271f47c2, type: 3}
   hideSound: {fileID: 8300000, guid: 4dd1079892066a04c931588ae19f4c5b, type: 3}
   uiAudioEvent: {fileID: 11400000, guid: b825c9540bf21d64e8c4e2631689215f, type: 2}
+--- !u!114 &1699541201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699541196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0863f9a6ce854bc468073925d741c403, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.5
+  inDuration: 0.5
+  outDuration: 0.5
+  ease: 6
+  inEase: 32
+  outEase: 6
+  inTarget: {x: 1, y: 1, z: 1}
+  outTarget: {x: 0, y: 1, z: 1}
 --- !u!1 &1708659387
 GameObject:
   m_ObjectHideFlags: 0

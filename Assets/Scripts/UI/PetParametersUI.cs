@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(UIAnimator))]
 public class PetParametersUI : MonoBehaviour, PetChangeEventListener, PetBornEventListener
 {
     public PetChangeEvent petChangeEvent;
@@ -14,6 +15,7 @@ public class PetParametersUI : MonoBehaviour, PetChangeEventListener, PetBornEve
     private RectTransform bars;
     private bool shown = false;
     private ShowUIAudioManager showAudioManager;
+    private UIAnimator animator;
 
     private void Start()
     {
@@ -27,6 +29,7 @@ public class PetParametersUI : MonoBehaviour, PetChangeEventListener, PetBornEve
         petBornEvent.petBornEvent += OnPetBorn;
         gameObject.SetActive(false);
         showAudioManager = GetComponent<ShowUIAudioManager>();
+        animator = GetComponent<UIAnimator>();
     }
     private void SetScale(RectTransform rectTransform, float value)
     {
@@ -38,32 +41,25 @@ public class PetParametersUI : MonoBehaviour, PetChangeEventListener, PetBornEve
     public void Show()
     {
         StopAllCoroutines();
-        if (!shown) StartCoroutine("ShowUI");
-        else StartCoroutine("HideUI");
+        if (!shown) ShowUI();
+        else HideUI();
     }
 
-    private IEnumerator HideUI() {
+    private void HideUI() {
         showAudioManager.HideSound();
         shown = false;
-        while (bars.localScale.y > 0.01) {
-            Vector3 scale = bars.localScale;
-            scale.y = Mathf.Lerp(bars.localScale.y, 0, 0.1f);
-            bars.localScale = scale;
-            yield return null;
-        }
+        animator.ScaleOut(bars.gameObject, Hide);
+    }
+
+    private void Hide() {
         bars.gameObject.SetActive(false);
     }
 
-    private IEnumerator ShowUI() {
+    private void ShowUI() {
         showAudioManager.ShowSound();
         shown = true;
         bars.gameObject.SetActive(true);
-        while (bars.localScale.y < 0.99) {
-            Vector3 scale = bars.localScale;
-            scale.y = Mathf.Lerp(bars.localScale.y, 1, 0.1f);
-            bars.localScale = scale;
-            yield return null;
-        }
+        animator.ScaleIn(bars.gameObject);
     }
 
     private void OnEnable()
