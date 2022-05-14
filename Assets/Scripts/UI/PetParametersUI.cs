@@ -13,6 +13,7 @@ public class PetParametersUI : MonoBehaviour, PetChangeEventListener, PetBornEve
     private RectTransform cleanlinessBar;
     private RectTransform bars;
     private bool shown = false;
+    private ShowUIAudioManager showAudioManager;
 
     private void Start()
     {
@@ -25,6 +26,7 @@ public class PetParametersUI : MonoBehaviour, PetChangeEventListener, PetBornEve
         bars.localScale = new Vector3(1, 0, 1);
         petBornEvent.petBornEvent += OnPetBorn;
         gameObject.SetActive(false);
+        showAudioManager = GetComponent<ShowUIAudioManager>();
     }
     private void SetScale(RectTransform rectTransform, float value)
     {
@@ -41,6 +43,7 @@ public class PetParametersUI : MonoBehaviour, PetChangeEventListener, PetBornEve
     }
 
     private IEnumerator HideUI() {
+        showAudioManager.HideSound();
         shown = false;
         while (bars.localScale.y > 0.01) {
             Vector3 scale = bars.localScale;
@@ -52,6 +55,7 @@ public class PetParametersUI : MonoBehaviour, PetChangeEventListener, PetBornEve
     }
 
     private IEnumerator ShowUI() {
+        showAudioManager.ShowSound();
         shown = true;
         bars.gameObject.SetActive(true);
         while (bars.localScale.y < 0.99) {

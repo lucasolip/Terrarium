@@ -10,23 +10,26 @@ public class PetInfoUI : MonoBehaviour, PetBornEventListener
     private PetController pet;
     private Text petName;
     private Text petAge;
+    private Text petStage;
     private DateTime dateBorn;
-    void Start()
-    {
+
+    private void Awake() {
         petName = transform.Find("Info").Find("Name").GetComponent<Text>();
         petAge = transform.Find("Info").Find("Age").GetComponent<Text>();
+        petStage = transform.Find("Info").Find("Stage").GetComponent<Text>();
         petBornEvent.petBornEvent += OnPetBorn;
         gameObject.SetActive(false);
     }
 
     private void Update() {
         petAge.text = "Edad: " + TimeFormatter.Format(DateTime.Now - dateBorn);
+        petStage.text = "Etapa: " + pet.stage.stageName;
     }
 
     public void OnPetBorn(PetController pet) {
         this.pet = pet;
         petName.text = pet.petName;
-        dateBorn = DateTime.Now;
+        dateBorn = pet.bornTime;
         gameObject.SetActive(true);
     }
 

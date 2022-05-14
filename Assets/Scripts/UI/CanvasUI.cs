@@ -9,6 +9,8 @@ public class CanvasUI : MonoBehaviour
     RectTransform mainPanel;
     RectTransform infoPanel;
     CanvasScaler scaler;
+    public UIAudioEvent uiAudioEvent;
+    public AudioClip slideSound;
 
     private void Start() {
         mainPanel = transform.Find("MainPanel").GetComponent<RectTransform>();
@@ -19,6 +21,7 @@ public class CanvasUI : MonoBehaviour
     }
 
     public void SwapPanels() {
+        uiAudioEvent.Raise(slideSound);
         StopAllCoroutines();
         if (showingMainPanel) StartCoroutine("HideMainPanel");
         else StartCoroutine("ShowMainPanel");

@@ -11,15 +11,16 @@ public class ToolPanelUI : MonoBehaviour
     float targetPosition;
     Image mainIcon;
     bool shown = false;
+    private ShowUIAudioManager showAudioManager;
     void Start()
     {
         mainIcon = transform.Find("ShowButton").GetComponent<Image>();
         toolBar = transform.Find("Tools").GetComponent<RectTransform>();
-        toolBar.gameObject.SetActive(shown);
         toolBar.localScale = new Vector3(0, toolBar.localScale.y, toolBar.localScale.z);
         selectedTool = toolBar.Find("Selected").GetComponent<RectTransform>();
         targetPosition = selectedTool.anchoredPosition.x;
         if (mouseController == null) mouseController = GameObject.Find("Canvas").GetComponent<MouseController>();
+        showAudioManager = GetComponent<ShowUIAudioManager>();
     }
 
     private void Update()
@@ -47,6 +48,7 @@ public class ToolPanelUI : MonoBehaviour
 
     private IEnumerator HideUI()
     {
+        showAudioManager.HideSound();
         shown = false;
         while (toolBar.localScale.x > 0.01) {
             Vector3 scale = toolBar.localScale;
@@ -59,6 +61,7 @@ public class ToolPanelUI : MonoBehaviour
 
     private IEnumerator ShowUI()
     {
+        showAudioManager.ShowSound();
         shown = true;
         toolBar.gameObject.SetActive(true);
         while (toolBar.localScale.x < 0.99) {

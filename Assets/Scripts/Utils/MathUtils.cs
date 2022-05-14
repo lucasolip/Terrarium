@@ -15,4 +15,9 @@ public class MathUtils
     public static float Map(float value, float istart, float istop, float ostart, float ostop) {
         return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
     }
+
+    public static int Abs(int value) {
+        if (value < 0) return -value;
+        return value;
+    }
 }

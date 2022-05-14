@@ -49,5 +49,6 @@ public class CameraController : MouseHandler
 
     public override void Released()
     {
+        origin = Input.mousePosition;
     }
 }
