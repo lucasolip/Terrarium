@@ -5,21 +5,19 @@ using UnityEngine;
 public class Grass : Plant
 {
     public GameObject grassGameobject;
-    public Mesh shortGrassMesh;
-    public Mesh tallGrassMesh;
+    public Vector3 shortScale;
+    public Vector3 tallScale;
     public int reproduceAge;
     public int growAge;
 
     bool isTall = false;
     int age = 0;
-    MeshFilter meshFilter;
     Collider objectCollider;
 
     private void Awake()
     {
-        meshFilter = GetComponent<MeshFilter>();
-        meshFilter.mesh = shortGrassMesh;
         objectCollider = GetComponent<Collider>();
+        transform.localScale = shortScale;
     }
 
     public override void OnTick()
@@ -30,7 +28,7 @@ public class Grass : Plant
         {
             isTall = true;
             objectCollider.enabled = true;
-            meshFilter.mesh = tallGrassMesh;
+            transform.localScale = tallScale;
         }
         if (age > reproduceAge)
         {
