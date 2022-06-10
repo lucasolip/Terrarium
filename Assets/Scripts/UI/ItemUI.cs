@@ -17,11 +17,11 @@ public class ItemUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, IPo
     {
         foodIcon = transform.GetChild(0).GetComponent<Image>();
         SetIcon(models[currentIndex].model);
+        petBornEvent.petBornEvent += OnPetBorn;
+        gameObject.SetActive(false);
     }
 
     private void Start() {
-        petBornEvent.petBornEvent += OnPetBorn;
-        gameObject.SetActive(false);
     }
 
     public void OnPointerDown(PointerEventData eventData)

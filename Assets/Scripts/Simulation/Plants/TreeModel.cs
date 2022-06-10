@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class TreeModel : Plant
 {
+    public int treeIndex = 0;
     public GameObject foodGameobject;
     public TreeStage stage;
     int growingTime = 0;
     GameObject treeView;
 
     private void Awake() {
+        ChangeView();
+    }
+
+    public void ChangeView() {
+        if (treeView != null) Destroy(treeView);
         treeView = Instantiate(stage.model, transform.position, transform.rotation * stage.model.transform.rotation, transform);
     }
 
@@ -19,8 +25,7 @@ public class TreeModel : Plant
         growingTime++;
         if (stage.stageTime > 0 && growingTime > stage.stageTime) {
             stage = stage.nextStage;
-            Destroy(treeView);
-            treeView = Instantiate(stage.model, transform.position, transform.rotation * stage.model.transform.rotation, transform);
+            ChangeView();
             growingTime = 0;
         }
         if (stage.isFruitTree) {

@@ -44,11 +44,27 @@ public static class SaveSystem
         return null;
     }
 
+    public static TerrainData LoadTerrain() {
+        string path = Application.persistentDataPath + terrainPath;
+        if (File.Exists(path)) {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream file = new FileStream(path, FileMode.Open);
+            TerrainData data = (TerrainData)formatter.Deserialize(file);
+            file.Close();
+            Debug.Log("Terrain data loaded.");
+            return data;
+        }
+        return null;
+    }
+
     public static void ResetPet() {
         string path = Application.persistentDataPath + petPath;
         if (File.Exists(path)) File.Delete(path);
     }
 
-    
+    public static void ResetTerrain() {
+        string path = Application.persistentDataPath + terrainPath;
+        if (File.Exists(path)) File.Delete(path);
+    }
 
 }

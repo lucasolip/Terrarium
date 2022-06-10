@@ -7,13 +7,15 @@ using System;
 public class NameUI : MonoBehaviour
 {
     Text input;
+    UIAnimator animator;
     public event Action inputSent;
     private void Awake() {
         input = transform.Find("Text").GetComponent<Text>();
+        animator = GetComponent<UIAnimator>();
     }
 
     public void Show() {
-        gameObject.SetActive(true);
+        animator.ScaleIn(gameObject);
     }
 
     public void InputSent() {
@@ -21,7 +23,7 @@ public class NameUI : MonoBehaviour
     }
 
     public string Dispose() {
-        gameObject.SetActive(false);
+        animator.ScaleOut(gameObject);
         return input.text;
     }
 }

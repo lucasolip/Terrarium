@@ -1,5 +1,4 @@
 using System;
-using UnityEditor;
 
 [System.Serializable]
 public class PetData
@@ -7,7 +6,7 @@ public class PetData
     int hunger, energy, happiness, cleanliness;
     string petName;
     DateTime bornTime;
-    string stagePath;
+    int stageIndex;
 
     public PetData(PetController pet) {
         hunger = pet.hunger;
@@ -16,7 +15,7 @@ public class PetData
         cleanliness = pet.cleanliness;
         petName = pet.petName;
         bornTime = pet.bornTime;
-        stagePath = AssetDatabase.GetAssetPath(pet.stage);
+        stageIndex = ScriptableObjectLocator.GetIndex(pet.stage);
     }
 
     public void LoadPet(PetController pet) {
@@ -26,6 +25,6 @@ public class PetData
         pet.cleanliness = cleanliness;
         pet.petName = petName;
         pet.bornTime = bornTime;
-        pet.stage = (PetStage)AssetDatabase.LoadAssetAtPath(stagePath, typeof(PetStage));
+        pet.stage = (PetStage)ScriptableObjectLocator.Get(stageIndex);
     }
 }

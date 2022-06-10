@@ -1,8 +1,9 @@
 using UnityEngine;
 using DateTime = System.DateTime;
 
-public class PetController : TickEventListener
+public class PetController : MonoBehaviour, TickEventListener
 {
+    public TickEvent tickEvent;
     public PetChangeEvent petChangeEvent;
     public string petName;
     public PetMood mood;
@@ -28,7 +29,7 @@ public class PetController : TickEventListener
         mood.OnEnter(stage, null, material);
     }
 
-    public override void OnTick()
+    public void OnTick()
     {
         Debug.Log("Pet tick");
         PetMood nextMood = mood.UpdateParameters(this, stage);
@@ -77,5 +78,13 @@ public class PetController : TickEventListener
     private void OnApplicationQuit()
     {
         stage.currentAge = 0;
+    }
+
+    private void OnEnable() {
+        tickEvent.tickEvent += OnTick;
+    }
+
+    private void OnDisable() {
+        tickEvent.tickEvent -= OnTick;
     }
 }

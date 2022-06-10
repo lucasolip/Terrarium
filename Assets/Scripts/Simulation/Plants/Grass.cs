@@ -10,8 +10,10 @@ public class Grass : Plant
     public int reproduceAge;
     public int growAge;
 
-    bool isTall = false;
-    int age = 0;
+    [HideInInspector]
+    public bool isTall = false;
+    [HideInInspector]
+    public int age = 0;
     Collider objectCollider;
 
     private void Awake()

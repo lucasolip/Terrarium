@@ -5,39 +5,39 @@ using UnityEngine.UI;
 
 public class CanvasUI : MonoBehaviour
 {
-    bool showingMainPanel = true;
-    RectTransform mainPanel;
-    RectTransform infoPanel;
+    int index = 0;
+    RectTransform[] panels;
     CanvasScaler scaler;
     public UIAudioEvent uiAudioEvent;
     public AudioClip slideSound;
     private UIAnimator animator;
 
     private void Start() {
-        mainPanel = transform.Find("MainPanel").GetComponent<RectTransform>();
-        infoPanel = transform.Find("InfoPanel").GetComponent<RectTransform>();
         scaler = GetComponent<CanvasScaler>();
         animator = GetComponent<UIAnimator>();
-        mainPanel.anchoredPosition = new Vector2(0, mainPanel.anchoredPosition.y);
-        infoPanel.anchoredPosition = new Vector2(scaler.referenceResolution.x, infoPanel.anchoredPosition.y);
+        panels = new RectTransform[transform.childCount];
+        for (int i = 0; i < transform.childCount; i++) {
+            panels[i] = transform.GetChild(i).GetComponent<RectTransform>();
+            panels[i].anchoredPosition = new Vector2(scaler.referenceResolution.x, panels[i].anchoredPosition.y);
+        }
+        panels[0].anchoredPosition = new Vector2(0, 0);
     }
 
-    public void SwapPanels() {
+    public void Next() {
         uiAudioEvent.Raise(slideSound);
-        StopAllCoroutines();
-        if (showingMainPanel) HideMainPanel();
-        else ShowMainPanel();
+        RectTransform currentPanel = panels[index];
+        RectTransform nextPanel = panels[index + 1];
+        animator.Move(currentPanel, new Vector3(-scaler.referenceResolution.x, currentPanel.anchoredPosition.y, 0));
+        animator.Move(nextPanel, new Vector3(0, nextPanel.anchoredPosition.y, 0));
+        index++;
     }
 
-    private void ShowMainPanel() {
-        showingMainPanel = true;
-        animator.Move(mainPanel, new Vector3(0, infoPanel.anchoredPosition.y, 0));
-        animator.Move(infoPanel, new Vector3(scaler.referenceResolution.x, infoPanel.anchoredPosition.y, 0));
-    }
-
-    private void HideMainPanel() {
-        showingMainPanel = false;
-        animator.Move(mainPanel, new Vector3(-scaler.referenceResolution.x, mainPanel.anchoredPosition.y, 0));
-        animator.Move(infoPanel, new Vector3(0, infoPanel.anchoredPosition.y, 0));
+    public void Previous() {
+        uiAudioEvent.Raise(slideSound);
+        RectTransform currentPanel = panels[index];
+        RectTransform previousPanel = panels[index - 1];
+        animator.Move(currentPanel, new Vector3(scaler.referenceResolution.x, currentPanel.anchoredPosition.y, 0));
+        animator.Move(previousPanel, new Vector3(0, previousPanel.anchoredPosition.y, 0));
+        index--;
     }
 }

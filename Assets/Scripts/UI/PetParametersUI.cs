@@ -17,20 +17,20 @@ public class PetParametersUI : MonoBehaviour, PetChangeEventListener, PetBornEve
     private ShowUIAudioManager showAudioManager;
     private UIAnimator animator;
 
-    private void Start()
-    {
+    private void Awake() {
+        petBornEvent.petBornEvent += OnPetBorn;
         bars = transform.GetChild(0).GetComponent<RectTransform>();
+        bars.gameObject.SetActive(shown);
         hungerBar = bars.GetChild(0).Find("Foreground").GetComponent<RectTransform>();
         energyBar = bars.GetChild(1).Find("Foreground").GetComponent<RectTransform>();
         happinessBar = bars.GetChild(2).Find("Foreground").GetComponent<RectTransform>();
         cleanlinessBar = bars.GetChild(3).Find("Foreground").GetComponent<RectTransform>();
-        bars.gameObject.SetActive(shown);
         bars.localScale = new Vector3(1, 0, 1);
-        petBornEvent.petBornEvent += OnPetBorn;
-        gameObject.SetActive(false);
         showAudioManager = GetComponent<ShowUIAudioManager>();
         animator = GetComponent<UIAnimator>();
+        gameObject.SetActive(false);
     }
+
     private void SetScale(RectTransform rectTransform, float value)
     {
         Vector3 scale = rectTransform.localScale;
