@@ -60,7 +60,6 @@ public class TerrainData {
                     Grass blockGrass = ((FertileBlock)block).grass;
                     if (blockGrass != null) {  
                         grass[i, j] = InitializeGrass(grass[i, j], blockGrass);
-                        Debug.Log(grass[i, j].exists);
                     } else 
                         grass[i, j].exists = false;
                 } else {

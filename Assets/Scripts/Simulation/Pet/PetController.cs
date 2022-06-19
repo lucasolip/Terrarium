@@ -72,7 +72,10 @@ public class PetController : MonoBehaviour, TickEventListener
     }
 
     private void Poop() {
-        Instantiate(poopPrefab, transform.position + (new Vector3(Random.Range(-2f,2f),0,Random.Range(-2f,2f))) * poopDistance, poopPrefab.transform.rotation);
+        Transform itemParent = GameObject.Find("Items").transform;
+        Instantiate(poopPrefab, 
+            transform.position + (new Vector3(Random.Range(-2f,2f),0,Random.Range(-2f,2f))) * poopDistance, 
+            poopPrefab.transform.rotation, itemParent);
         poops -= 1;
     }
     private void OnApplicationQuit()

@@ -17,10 +17,11 @@ public class FertileBlock : MonoBehaviour, TickEventListener, TerrainBlock
 
     public void PlantNeighbour(GameObject grassGameObject)
     {
+        Quaternion rotation = (terrain.rotateGrass) ? Quaternion.Euler(0, Random.Range(0f, 360f), 0) : Quaternion.identity;
         Grass seed = Instantiate(grassGameObject, grassGameObject.transform.position,
-                Quaternion.Euler(0, Random.Range(0f, 360f), 0)).GetComponent<Grass>();
-        int randomX = 2 * Random.Range(0, 1) - 1;
-        int randomY = 2 * Random.Range(0, 1) - 1;
+                rotation).GetComponent<Grass>();
+        int randomX = 2 * Random.Range(0, 2) - 1;
+        int randomY = 2 * Random.Range(0, 2) - 1;
         terrain.Plant(x + randomX, y + randomY, seed);
     }
 

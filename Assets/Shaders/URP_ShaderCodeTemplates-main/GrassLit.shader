@@ -8,6 +8,8 @@ Shader "Lucas/GrassLit" {
         _WindIntensity ("Wind Intensity", Float) = 1.0
         _WindStrength ("Wind Strength", Float) = 1.0
         _WindDensity ("Wind Density", Float) = 1.0
+		_WindScale ("Wind Scale", Float) = 1.0
+		_Offset ("Wind Offset", Vector) = (100.0, 100.0, 100.0, 100.0)
 
 		[Space(20)]
 		[Toggle(_ALPHATEST_ON)] _AlphaTestToggle ("Alpha Clipping", Float) = 0
@@ -77,6 +79,9 @@ Shader "Lucas/GrassLit" {
 		uniform float _WindIntensity;
 		uniform float _WindStrength;
 		uniform float _WindDensity;
+		uniform float _WindScale;
+		uniform float2 _Offset;
+
 		CBUFFER_END
 		ENDHLSL
 
@@ -194,11 +199,11 @@ Shader "Lucas/GrassLit" {
 				//UNITY_TRANSFER_INSTANCE_ID(IN, OUT);
 				//UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
 
-				_WindTexture_ST.xy += _Time.y * _WindDensity;
+				//_WindTexture_ST.xy += _Time.y * _WindDensity;
 				float4 worldCoord = mul(unity_ObjectToWorld, IN.positionOS);
-				float4 noise = tex2Dlod(_WindTexture, float4(worldCoord.xz * _WindTexture_ST, 0.0, 0.0)) * _WindIntensity;
-				float xNoise = map(snoise(float2(worldCoord.x, _Time.y* _WindDensity)), -1, 1, -_WindStrength, _WindStrength);
-				float zNoise = map(snoise(float2(worldCoord.z, _Time.y* _WindDensity)), -1, 1, -_WindStrength, _WindStrength);
+				//float4 noise = tex2Dlod(_WindTexture, float4(worldCoord.xz * _WindTexture_ST, 0.0, 0.0)) * _WindIntensity;				
+				float xNoise = map(snoise(float2(worldCoord.x, worldCoord.z) * _WindScale + _Offset + float2(_Time.y * _WindDensity, _Time.y * _WindDensity)), -1, 1, -_WindStrength, _WindStrength);
+				float zNoise = map(snoise(float2(worldCoord.x, worldCoord.z) * _WindScale + float2(_Time.y * _WindDensity, _Time.y * _WindDensity)), -1, 1, -_WindStrength, _WindStrength);
 				IN.positionOS.xyz += float3(xNoise, 0.0, zNoise) * 0.01 * IN.uv.y;
 
 				VertexPositionInputs positionInputs = GetVertexPositionInputs(IN.positionOS.xyz);
@@ -313,11 +318,11 @@ Shader "Lucas/GrassLit" {
 				UNITY_SETUP_INSTANCE_ID(input);
 				
 				// Example Displacement
-				_WindTexture_ST.xy += _Time.y * _WindDensity;
+				//_WindTexture_ST.xy += _Time.y * _WindDensity;
 				float4 worldCoord = mul(unity_ObjectToWorld, input.positionOS);
-				float4 noise = tex2Dlod(_WindTexture, float4(worldCoord.xz * _WindTexture_ST, 0.0, 0.0)) * _WindIntensity;
-				float xNoise = map(snoise(float2(worldCoord.x, _Time.y* _WindDensity)), -1, 1, -_WindStrength, _WindStrength);
-				float zNoise = map(snoise(float2(worldCoord.z, _Time.y* _WindDensity)), -1, 1, -_WindStrength, _WindStrength);
+				//float4 noise = tex2Dlod(_WindTexture, float4(worldCoord.xz * _WindTexture_ST, 0.0, 0.0)) * _WindIntensity;
+				float xNoise = map(snoise(float2(worldCoord.x, worldCoord.z) * _WindScale + _Offset + float2(_Time.y * _WindDensity, _Time.y * _WindDensity)), -1, 1, -_WindStrength, _WindStrength);
+				float zNoise = map(snoise(float2(worldCoord.x, worldCoord.z) * _WindScale + float2(_Time.y * _WindDensity, _Time.y * _WindDensity)), -1, 1, -_WindStrength, _WindStrength);
 				input.positionOS.xyz += float3(xNoise, 0.0, zNoise) * 0.01 * input.texcoord.y;
 				
 				output.uv = TRANSFORM_TEX(input.texcoord, _BaseMap);
@@ -338,7 +343,8 @@ Shader "Lucas/GrassLit" {
 			ZTest LEqual
 
 			HLSLPROGRAM
-			#pragma vertex DepthOnlyVertex
+			//#pragma vertex DepthOnlyVertex
+			#pragma vertex DisplacedDepthOnlyVertex
 			#pragma fragment DepthOnlyFragment
 
 			// Material Keywords
@@ -354,8 +360,8 @@ Shader "Lucas/GrassLit" {
 			#include "Packages/com.unity.render-pipelines.universal/Shaders/DepthOnlyPass.hlsl"
 
 			// Note if we do any vertex displacement, we'll need to change the vertex function. e.g. :
-			/*
-			#pragma vertex DisplacedDepthOnlyVertex (instead of DepthOnlyVertex above)
+			
+			//#pragma vertex DisplacedDepthOnlyVertex (instead of DepthOnlyVertex above)
 			
 			Varyings DisplacedDepthOnlyVertex(Attributes input) {
 				Varyings output = (Varyings)0;
@@ -363,13 +369,18 @@ Shader "Lucas/GrassLit" {
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 				
 				// Example Displacement
-				input.positionOS += float4(0, _SinTime.y, 0, 0);
+				//_WindTexture_ST.xy += _Time.y * _WindDensity;
+				float4 worldCoord = mul(unity_ObjectToWorld, input.position);
+				//float4 noise = tex2Dlod(_WindTexture, float4(worldCoord.xz * _WindTexture_ST, 0.0, 0.0)) * _WindIntensity;
+				float xNoise = map(snoise(float2(worldCoord.x, worldCoord.z) * _WindScale + _Offset + float2(_Time.y * _WindDensity, _Time.y * _WindDensity)), -1, 1, -_WindStrength, _WindStrength);
+				float zNoise = map(snoise(float2(worldCoord.x, worldCoord.z) * _WindScale + float2(_Time.y * _WindDensity, _Time.y * _WindDensity)), -1, 1, -_WindStrength, _WindStrength);
+				input.position.xyz += float3(xNoise, 0.0, zNoise) * 0.01 * input.texcoord.y;
 				
 				output.uv = TRANSFORM_TEX(input.texcoord, _BaseMap);
 				output.positionCS = TransformObjectToHClip(input.position.xyz);
 				return output;
 			}
-			*/
+			
 			
 			ENDHLSL
 		}
@@ -383,7 +394,8 @@ Shader "Lucas/GrassLit" {
 			ZTest LEqual
 
 			HLSLPROGRAM
-			#pragma vertex DepthNormalsVertex
+			#pragma vertex DisplacedDepthNormalsVertex
+			//#pragma vertex DepthNormalsVertex
 			#pragma fragment DepthNormalsFragment
 
 			// Material Keywords
@@ -400,8 +412,8 @@ Shader "Lucas/GrassLit" {
 			#include "Packages/com.unity.render-pipelines.universal/Shaders/DepthNormalsPass.hlsl"
 
 			// Note if we do any vertex displacement, we'll need to change the vertex function. e.g. :
-			/*
-			#pragma vertex DisplacedDepthNormalsVertex (instead of DepthNormalsVertex above)
+			
+			// (instead of DepthNormalsVertex above)
 
 			Varyings DisplacedDepthNormalsVertex(Attributes input) {
 				Varyings output = (Varyings)0;
@@ -409,15 +421,20 @@ Shader "Lucas/GrassLit" {
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 				
 				// Example Displacement
-				input.positionOS += float4(0, _SinTime.y, 0, 0);
+				//_WindTexture_ST.xy += _Time.y * _WindDensity;
+				float4 worldCoord = mul(unity_ObjectToWorld, input.positionOS);
+				//float4 noise = tex2Dlod(_WindTexture, float4(worldCoord.xz * _WindTexture_ST, 0.0, 0.0)) * _WindIntensity;
+				float xNoise = map(snoise(float2(worldCoord.x, worldCoord.z) * _WindScale + _Offset + float2(_Time.y * _WindDensity, _Time.y * _WindDensity)), -1, 1, -_WindStrength, _WindStrength);
+				float zNoise = map(snoise(float2(worldCoord.x, worldCoord.z) * _WindScale + float2(_Time.y * _WindDensity, _Time.y * _WindDensity)), -1, 1, -_WindStrength, _WindStrength);
+				input.positionOS.xyz += float3(xNoise, 0.0, zNoise) * 0.01 * input.texcoord.y;
 				
 				output.uv = TRANSFORM_TEX(input.texcoord, _BaseMap);
-				output.positionCS = TransformObjectToHClip(input.position.xyz);
+				output.positionCS = TransformObjectToHClip(input.positionOS.xyz);
 				VertexNormalInputs normalInput = GetVertexNormalInputs(input.normal, input.tangentOS);
 				output.normalWS = NormalizeNormalPerVertex(normalInput.normalWS);
 				return output;
 			}
-			*/
+			
 			
 			ENDHLSL
 		}
@@ -426,6 +443,7 @@ Shader "Lucas/GrassLit" {
 		// Note, while v10 versions ignore this, if you want normal mapping to affect the _CameraNormalsTexture, we could edit the DepthNormals pass
 		// (or if in v12+, use the LitDepthNormalsPass.hlsl instead, which additionally includes parallax and detail normals support)
 		// https://github.com/Unity-Technologies/Graphics/blob/master/com.unity.render-pipelines.universal/Shaders/LitDepthNormalsPass.hlsl
+		
 		/*
 		Pass {
 			Name "DepthNormals"

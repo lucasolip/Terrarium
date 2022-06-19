@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Orajo
   m_EditorClassIdentifier: 
   itemName: Orajo
-  description: 
   itemTag: Food
+  description: "C\xEDtrico que sacia bastante"
+  price: 10
   model: {fileID: 2800000, guid: 69e6dc25591e09a4eaf2580b42502b4d, type: 3}
   hunger: 50
   energy: 0

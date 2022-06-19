@@ -340,6 +340,7 @@ Shader "Lucas/LeavesLit" {
 			ZTest LEqual
 
 			HLSLPROGRAM
+			//#pragma vertex DisplacedDepthOnlyVertex
 			#pragma vertex DepthOnlyVertex
 			#pragma fragment DepthOnlyFragment
 
@@ -354,24 +355,29 @@ Shader "Lucas/LeavesLit" {
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Shaders/DepthOnlyPass.hlsl"
-
-			// Note if we do any vertex displacement, we'll need to change the vertex function. e.g. :
-			/*
-			#pragma vertex DisplacedDepthOnlyVertex (instead of DepthOnlyVertex above)
 			
+			/*
 			Varyings DisplacedDepthOnlyVertex(Attributes input) {
 				Varyings output = (Varyings)0;
 				UNITY_SETUP_INSTANCE_ID(input);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 				
 				// Example Displacement
-				input.positionOS += float4(0, _SinTime.y, 0, 0);
+				float2 mappedUV = map(input.texcoord.xy, float2(0,0), float2(1,1), float2(-1,-1), float2(1,1));
+				float4 worldPos = mul(unity_ObjectToWorld, input.positionOS);
+				float noise = snoise(float3(worldPos.x, _Time.y, worldPos.z) * _WindDensity) * _WindIntensity;
+				float3 displacement = float3(mappedUV.x + noise, mappedUV.y, 0.0);
+				displacement = mul(displacement, UNITY_MATRIX_V);
+				displacement = mul(unity_WorldToObject, displacement);
+				displacement = normalize(displacement) * _Factor;
+
+				input.positionOS.xyz += displacement;
 				
 				output.uv = TRANSFORM_TEX(input.texcoord, _BaseMap);
 				output.positionCS = TransformObjectToHClip(input.position.xyz);
 				return output;
-			}
-			*/
+			}*/
+			
 			
 			ENDHLSL
 		}

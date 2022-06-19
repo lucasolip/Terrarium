@@ -30,4 +30,9 @@ public class EggController : MouseHandler
     {
         
     }
+
+    private void OnDestroy()
+    {
+        inputField.inputSent -= OnInputSent;
+    }
 }

@@ -44,6 +44,7 @@ public class Brain : MonoBehaviour
         if (!asleep) Behaviour();
         rb.position = new Vector3(rb.position.x, fixedHeight, rb.position.z);
 
+        
         if (Physics.OverlapSphereNonAlloc(transform.position - transform.forward, 1f, collisions, foodMask) > 0)
         {
             pet.mood.Eat(pet, collisions[0].transform.GetComponent<ItemController>());
@@ -75,7 +76,9 @@ public class Brain : MonoBehaviour
 
     private Vector3 Avoid()
     {
-        if (!Physics.Raycast(transform.position + forward, Vector3.down, 2f, floorMask))
+        Vector3 sphereCenter = transform.position;
+        sphereCenter.y += 0.5f;
+        if (!Physics.Raycast(sphereCenter + forward, Vector3.down, 2f, floorMask))
             return Quaternion.Euler(0, 90, 0) * forward;
         return Vector3.zero;
     }
@@ -87,8 +90,10 @@ public class Brain : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position + forward, 1f);
-        Gizmos.DrawRay(transform.position + forward, Vector3.down);
+        Vector3 sphereCenter = transform.position;
+        sphereCenter.y += 0.5f;
+        Gizmos.DrawWireSphere(sphereCenter + forward, 1f);
+        Gizmos.DrawRay(sphereCenter + forward, Vector3.down);
         Gizmos.color = Color.red;
         Gizmos.DrawRay(transform.position, Quaternion.Euler(0, 90, 0) * forward);
     }

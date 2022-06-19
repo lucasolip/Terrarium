@@ -7,7 +7,6 @@ using System;
 public class UIAudioEvent : ScriptableObject
 {
     public event Action<AudioClip> uiAudioEvent;
-    private List<UIAudioEventListener> listeners = new List<UIAudioEventListener>();
 
     public void Raise(AudioClip clip)
     {

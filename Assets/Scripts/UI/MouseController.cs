@@ -11,7 +11,7 @@ public class MouseController : MouseHandlerCreatedEventListener
     public static ToolController selectedTool;
     Camera cam;
     public MouseHandler cameraControl;
-    MouseHandler selected;
+    public MouseHandler selected;
     bool clicked = false;
 
 
@@ -43,7 +43,9 @@ public class MouseController : MouseHandlerCreatedEventListener
     }
     private void CheckHit(Mode mode)
     {
-        if (EventSystem.current.IsPointerOverGameObject()) return;
+        if (EventSystem.current.IsPointerOverGameObject()) {
+            return;
+        }
         RaycastHit hit;
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, 1000f, layerMask))

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 168083614606424821}
   - component: {fileID: 3889699118664316240}
   - component: {fileID: 1305494086751486362}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: SeedView
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -19,6 +19,7 @@ public class TerrainController : MonoBehaviour, TickEventListener {
     [Header("Plant settings")]
     [Range(0f, 1f)]
     public float grassChance = 0.2f;
+    public bool rotateGrass = false;
     [Range(0f, 1f)]
     public float treeChance = 0.1f;
     public float minTreeSize = 75;
@@ -52,9 +53,10 @@ public class TerrainController : MonoBehaviour, TickEventListener {
         block.y = j;
         block.terrain = this;
         if (Random.Range(0f, 1f) < grassChance) {
+            Quaternion rotation = (rotateGrass) ? Quaternion.Euler(0, Random.Range(0f, 360f), 0) : Quaternion.identity;
             Grass seed = Instantiate(grassGameObject,
                 block.transform.position + new Vector3(0, 0.5f, 0),
-                Quaternion.Euler(0, Random.Range(0f, 360f), 0),
+                rotation,
                 block.transform).GetComponent<Grass>();
             Plant(seed, block);
         }
@@ -117,6 +119,8 @@ public class TerrainController : MonoBehaviour, TickEventListener {
                 blocks[i, j] = blockGameobject.GetComponent<TerrainBlock>();
                 if (chosenBlock == fertileBlock) {
                     FertileBlock block = (FertileBlock)blocks[i, j];
+                    block.x = i;
+                    block.y = j;
                     block.wet = data.blocks[i, j].wet;
                     block.terrain = this;
                     if (data.grass[i, j].exists) {
@@ -124,7 +128,9 @@ public class TerrainController : MonoBehaviour, TickEventListener {
                             data.grass[i, j].position,
                             data.grass[i, j].rotation,
                             block.transform).GetComponent<Grass>();
-                            seed.isTall = data.grass[i, j].isTall;
+                        seed.isTall = data.grass[i, j].isTall;
+                        seed.age = data.grass[i, j].age;
+                        if (seed.isTall) seed.Grow();
                         Plant(seed, block);
                     }
                     if (data.trees[i, j].exists) {
@@ -151,6 +157,9 @@ public class TerrainController : MonoBehaviour, TickEventListener {
                 if (fblock.tree != null) fblock.tree.Chop();
                 Destroy(fblock);
             }
+        }
+        for (int i = 0; i < transform.childCount; i++) {
+            Destroy(transform.GetChild(i).gameObject);
         }
     }
 

@@ -10,9 +10,7 @@ public class Grass : Plant
     public int reproduceAge;
     public int growAge;
 
-    [HideInInspector]
-    public bool isTall = false;
-    [HideInInspector]
+    public bool isTall;
     public int age = 0;
     Collider objectCollider;
 
@@ -20,22 +18,25 @@ public class Grass : Plant
     {
         objectCollider = GetComponent<Collider>();
         transform.localScale = shortScale;
+        isTall = false;
     }
 
     public override void OnTick()
     {
         Debug.Log("Grass tick");
         age++;
-        if (!isTall && age > growAge)
-        {
-            isTall = true;
-            objectCollider.enabled = true;
-            transform.localScale = tallScale;
+        if (!isTall && age > growAge) {
+            Grow();
         }
-        if (age > reproduceAge)
-        {
+        if (age > reproduceAge) {
             Reproduce();
         }
+    }
+
+    public void Grow() {
+        isTall = true;
+        objectCollider.enabled = true;
+        transform.localScale = tallScale;
     }
 
     void Reproduce()

@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e120b8c9cb017a34aad44306f2a411a1, type: 3}
   m_Name: Pearpple
   m_EditorClassIdentifier: 
-  itemName: Pearpple
-  description: 
+  itemName: Peranzana
   itemTag: Food
+  description: Fruta bastante completa que mejora el estado general de la mascota
+  price: 15
   model: {fileID: 2800000, guid: d868262b535263d4b8bd52bdbd30e886, type: 3}
   hunger: 50
   energy: 50

@@ -3,48 +3,87 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
-public class ItemUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, IPointerExitHandler, PetBornEventListener
+public class ItemUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, 
+    IPointerExitHandler, PetBornEventListener, InventoryChangedEventListener, IPointerEnterHandler
 {
+    public MouseController mouseController;
+    public InventoryChangedEvent inventoryChanged;
     public PetBornEvent petBornEvent;
-    public ItemModel[] models;
-    public GameObject foodPrototype;
+    public GameObject itemPrototype;
+    public InventoryController userInventory;
+    private UIAudioPlayer player;
+    private List<ItemModel> items;
+    private List<int> itemQuantities;
     int currentIndex = 0;
     Image foodIcon;
+    TextMeshProUGUI quantity;
     bool mouseHeld = false;
 
     private void Awake()
     {
-        foodIcon = transform.GetChild(0).GetComponent<Image>();
-        SetIcon(models[currentIndex].model);
+        foodIcon = transform.Find("FoodIcon").GetComponent<Image>();
+        quantity = transform.Find("Quantity").GetComponent<TextMeshProUGUI>();
+        player = GetComponent<UIAudioPlayer>();
+        items = new List<ItemModel>();
+        itemQuantities = new List<int>();
         petBornEvent.petBornEvent += OnPetBorn;
+        inventoryChanged.itemAdded += OnItemAdded;
+        inventoryChanged.itemChanged += OnItemChanged;
+        inventoryChanged.itemRemoved += OnItemRemoved;
         gameObject.SetActive(false);
     }
 
-    private void Start() {
+    private void Start()
+    {
+        if (items.Count == 0) {
+            Dictionary<ItemModel, int> inventoryItems = userInventory.GetItems();
+            foreach (KeyValuePair<ItemModel, int> pair in inventoryItems)
+            {
+                items.Add(pair.Key);
+                itemQuantities.Add(pair.Value);
+            }
+            SetIcon(items[0].model);
+            quantity.text = itemQuantities[0].ToString();
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         mouseHeld = true;
     }
-    
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        eventData.pointerPress = gameObject;
+    }
+
     public void OnPointerUp(PointerEventData eventData)
     {
         mouseHeld = false;
+        ItemController item = mouseController.selected.transform.GetComponent<ItemController>();
+        if (item != null) {
+            userInventory.AddItem(item.model);
+            player.Play(0);
+            Destroy(item.gameObject);
+            mouseController.selected = null;
+        }
     }
+
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (mouseHeld) InstantiateFood();
+        if (mouseHeld) InstantiateItem();
         mouseHeld = false;
     }
 
-    void InstantiateFood()
+    void InstantiateItem()
     {
-        GameObject newFood = Instantiate(foodPrototype, MathUtils.GetXZPlaneIntersection(Input.mousePosition, .5f, Camera.main), Quaternion.identity);
+        GameObject newFood = Instantiate(itemPrototype, MathUtils.GetXZPlaneIntersection(Input.mousePosition, .5f, Camera.main), Quaternion.identity);
         newFood.GetComponent<Rigidbody>().isKinematic = false;
-        newFood.GetComponent<ItemController>().model = models[currentIndex];
+        newFood.GetComponent<ItemController>().model = items[currentIndex];
         newFood.GetComponent<MouseFollower>().enabled = true;
+        userInventory.RemoveItem(items[currentIndex]);
     }
 
     void SetIcon(Texture icon)
@@ -61,23 +100,66 @@ public class ItemUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, IPo
 
     public void NextElement()
     {
-        currentIndex = (currentIndex + 1) % models.Length;
-        SetIcon(models[currentIndex].model);
+        if (items.Count == 0) {
+            SetIcon(TextureLocator.nullTexture);
+            quantity.text = "";
+            return;
+        }
+        currentIndex = (currentIndex + 1) % items.Count;
+        SetIcon(items[currentIndex].model);
+        quantity.text = itemQuantities[currentIndex].ToString();
     }
 
     public void PreviousElement()
     {
-        currentIndex = (currentIndex - 1) % models.Length;
-        if (currentIndex < 0) currentIndex = models.Length - 1;
-        SetIcon(models[currentIndex].model);
+        if (items.Count == 0) {
+            SetIcon(TextureLocator.nullTexture);
+            quantity.text = "";
+            return;
+        }
+        currentIndex = (currentIndex - 1) % items.Count;
+        if (currentIndex < 0) currentIndex = items.Count - 1;
+        SetIcon(items[currentIndex].model);
+        quantity.text = itemQuantities[currentIndex].ToString();
     }
 
     private void OnDestroy() {
         petBornEvent.petBornEvent -= OnPetBorn;
+        inventoryChanged.itemAdded -= OnItemAdded;
+        inventoryChanged.itemChanged -= OnItemChanged;
+        inventoryChanged.itemRemoved -= OnItemRemoved;
     }
 
     public void OnPetBorn(PetController pet) {
         gameObject.SetActive(true);
     }
 
+    public void OnItemAdded(ItemModel item)
+    {
+        items.Add(item);
+        itemQuantities.Add(1);
+        if (items.Count == 1) {
+            SetIcon(items[0].model);
+            quantity.text = itemQuantities[0].ToString();
+        }
+    }
+
+    public void OnItemChanged(ItemModel item, int quantity)
+    {
+        int index = items.IndexOf(item);
+        itemQuantities[index] = quantity;
+        if (index == currentIndex) {
+            this.quantity.text = itemQuantities[currentIndex].ToString();
+        }
+    }
+
+    public void OnItemRemoved(ItemModel item)
+    {
+        int index = items.IndexOf(item);
+        items.Remove(item);
+        itemQuantities.RemoveAt(index);
+        PreviousElement();
+    }
+
+    
 }

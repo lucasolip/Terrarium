@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ScriptableObjectLocator : MonoBehaviour
 {
@@ -15,10 +16,20 @@ public class ScriptableObjectLocator : MonoBehaviour
     }
 
     public static int GetIndex(ScriptableObject obj) {
-        return objectList.IndexOf(obj);
+        try {
+            return objectList.IndexOf(obj);
+        } catch (ArgumentOutOfRangeException argException) {
+            Debug.LogError("Missing ScriptableObject from ScriptableObjectLocator");
+            return -1;
+        }
     }
 
     public static ScriptableObject Get(int index) {
-        return objectList[index];
+        try {
+            return objectList[index];
+        } catch (ArgumentOutOfRangeException argException) {
+            Debug.LogError("Missing ScriptableObject from ScriptableObjectLocator. " + argException.StackTrace);
+            return null;
+        }
     }
 }

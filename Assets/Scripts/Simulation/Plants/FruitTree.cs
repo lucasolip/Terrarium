@@ -43,12 +43,13 @@ public class FruitTree : MonoBehaviour
 
     public void RipeFruit()
     {
+        Transform itemParent = GameObject.Find("Items").transform;
         foreach (int i in usedGaps) {
             if (null != fruits[i]) {
                 fruits[i].GetComponent<Rigidbody>().isKinematic = false;
                 fruits[i].GetComponent<MouseFollower>().enabled = true;
                 Vector3 position = fruits[i].transform.position;
-                fruits[i].transform.SetParent(null);
+                fruits[i].transform.SetParent(itemParent);
                 fruits[i].transform.position = position;
                 fruits[i] = null;
                 availableGaps.Add(i);
