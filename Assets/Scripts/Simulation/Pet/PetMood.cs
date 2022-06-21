@@ -10,6 +10,8 @@ public abstract class PetMood
         return CheckMood(pet, stage);
     }
 
+    public abstract Texture GetModel(PetStage stage);
+
     public abstract void ComputeNecessities(PetController pet, PetStage stage);
 
     public abstract PetMood CheckMood(PetController pet, PetStage stage);

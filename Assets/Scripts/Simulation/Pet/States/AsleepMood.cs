@@ -24,4 +24,9 @@ public class AsleepMood : PetMood {
     public override void Eat(PetController pet, ItemController food) {
         return;
     }
+
+    public override Texture GetModel(PetStage stage)
+    {
+        return stage.asleepModel;
+    }
 }

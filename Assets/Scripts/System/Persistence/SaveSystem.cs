@@ -9,12 +9,12 @@ public static class SaveSystem
     private static string petPath = "/pet.save";
     private static string terrainPath = "/terrain.save";
 
-    public static void SavePet(PetController pet) {
+    public static void SavePet(PetController pet, bool dead) {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + petPath;
         FileStream file = new FileStream(path, FileMode.Create);
 
-        PetData data = new PetData(pet);
+        PetData data = new PetData(pet, dead);
         formatter.Serialize(file, data);
         file.Close();
         Debug.Log("Pet data saved.");

@@ -6,7 +6,6 @@ using System;
 public class PetChangeEvent : ScriptableObject
 {
     public event Action<int, int, int, int> petChangeEvent;
-    private List<PetChangeEventListener> listeners = new List<PetChangeEventListener>();
 
     public void Raise(int hunger, int energy, int happiness, int cleanliness)
     {

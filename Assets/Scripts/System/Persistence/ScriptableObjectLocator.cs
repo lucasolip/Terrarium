@@ -19,7 +19,7 @@ public class ScriptableObjectLocator : MonoBehaviour
         try {
             return objectList.IndexOf(obj);
         } catch (ArgumentOutOfRangeException argException) {
-            Debug.LogError("Missing ScriptableObject from ScriptableObjectLocator");
+            Debug.LogError("Missing ScriptableObject from ScriptableObjectLocator. " + argException.StackTrace);
             return -1;
         }
     }

@@ -6,11 +6,12 @@ using UnityEngine.UI;
 using TMPro;
 
 public class ItemUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, 
-    IPointerExitHandler, PetBornEventListener, InventoryChangedEventListener, IPointerEnterHandler
+    IPointerExitHandler, PetBornEventListener, InventoryChangedEventListener, IPointerEnterHandler, PetDiedEventListener
 {
     public MouseController mouseController;
     public InventoryChangedEvent inventoryChanged;
     public PetBornEvent petBornEvent;
+    public PetDiedEvent petDiedEvent;
     public GameObject itemPrototype;
     public InventoryController userInventory;
     private UIAudioPlayer player;
@@ -29,6 +30,7 @@ public class ItemUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler,
         items = new List<ItemModel>();
         itemQuantities = new List<int>();
         petBornEvent.petBornEvent += OnPetBorn;
+        petDiedEvent.petDiedEvent += OnPetDied;
         inventoryChanged.itemAdded += OnItemAdded;
         inventoryChanged.itemChanged += OnItemChanged;
         inventoryChanged.itemRemoved += OnItemRemoved;
@@ -49,6 +51,11 @@ public class ItemUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler,
         }
     }
 
+    public ItemModel GetCurrentItem()
+    {
+        return items[currentIndex];
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         mouseHeld = true;
@@ -62,7 +69,9 @@ public class ItemUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler,
     public void OnPointerUp(PointerEventData eventData)
     {
         mouseHeld = false;
-        ItemController item = mouseController.selected.transform.GetComponent<ItemController>();
+        MouseHandler handler = mouseController.selected;
+        ItemController item = null;
+        if (handler != null) item = handler.transform.GetComponent<ItemController>();
         if (item != null) {
             userInventory.AddItem(item.model);
             player.Play(0);
@@ -73,6 +82,7 @@ public class ItemUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler,
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        eventData.pointerPress = null;
         if (mouseHeld) InstantiateItem();
         mouseHeld = false;
     }
@@ -125,6 +135,7 @@ public class ItemUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler,
 
     private void OnDestroy() {
         petBornEvent.petBornEvent -= OnPetBorn;
+        petDiedEvent.petDiedEvent -= OnPetDied;
         inventoryChanged.itemAdded -= OnItemAdded;
         inventoryChanged.itemChanged -= OnItemChanged;
         inventoryChanged.itemRemoved -= OnItemRemoved;
@@ -132,6 +143,11 @@ public class ItemUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler,
 
     public void OnPetBorn(PetController pet) {
         gameObject.SetActive(true);
+    }
+
+    public void OnPetDied(PetController pet)
+    {
+        gameObject.SetActive(false);
     }
 
     public void OnItemAdded(ItemModel item)
@@ -160,6 +176,4 @@ public class ItemUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler,
         itemQuantities.RemoveAt(index);
         PreviousElement();
     }
-
-    
 }

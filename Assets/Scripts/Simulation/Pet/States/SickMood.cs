@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SickMood : PetMood {
     public PetMood previousMood;
-    const int timeBeingSick = 120;
+    const int timeBeingSick = 7;
     int timeSick = 0;
     public override void OnEnter(PetStage stage, PetMood previousMood, Material material) {
         this.previousMood = previousMood;
@@ -44,5 +44,10 @@ public class SickMood : PetMood {
             GameObject.Destroy(item.gameObject);
         }
         pet.CheckMood();
+    }
+
+    public override Texture GetModel(PetStage stage)
+    {
+        return stage.sickModel;
     }
 }

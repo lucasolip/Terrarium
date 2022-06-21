@@ -24,4 +24,9 @@ public class FineMood : PetMood {
         }
         return null;
     }
+
+    public override Texture GetModel(PetStage stage)
+    {
+        return stage.fineModel;
+    }
 }

@@ -10,4 +10,6 @@ public class ItemModel : ScriptableObject
     public string description;
     public int price;
     public Texture model;
+    public bool isPlantable = false;
+    public GameObject plantPrefab;
 }

@@ -1318,6 +1318,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tickEvent: {fileID: 11400000, guid: 47e4691a371a46447aeb678656c37a19, type: 2}
+  userInventory: {fileID: 323020900}
+  itemUI: {fileID: 522053157}
   fertileBlock: {fileID: 4851312451639005599, guid: ecc93fcdcee9f524da1321dde7d0c857, type: 3}
   barrenBlock: {fileID: 1319334945184053941, guid: 3bab76a3d5387a843b5e2c0b1ec4cd25, type: 3}
   grassGameObject: {fileID: 5689774636140895599, guid: 66cdaa86e5aa602438e5c7ab463cb2a8, type: 3}
@@ -2227,9 +2229,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   petBornEvent: {fileID: 11400000, guid: a296a1030e2db244d867d5015eb2aac0, type: 2}
+  petDiedEvent: {fileID: 11400000, guid: 22b9ea8c9c99887409c3fbbd7bacfa4c, type: 2}
   startPosition: {x: 0, y: 1, z: 0}
   petGameobject: {fileID: 1761338312932836929, guid: 357bbedc7682c1e46acf23b4d3c05089, type: 3}
   eggGameobject: {fileID: 1483079391720698074, guid: b4c0b1c050d7be042a0e5770cf6c7d51, type: 3}
+  deadGameobject: {fileID: 4676070018496403552, guid: 6ed1fea6e9e322f43bcf7864dd8460d3, type: 3}
 --- !u!1 &323020899
 GameObject:
   m_ObjectHideFlags: 0
@@ -2263,9 +2267,7 @@ MonoBehaviour:
   moneyChangedEvent: {fileID: 11400000, guid: fbad1ac0d2faac048a895f490afbb4e6, type: 2}
   inventoryChangedEvent: {fileID: 11400000, guid: 8a75974fbeedc114696f27aef5af8ca1, type: 2}
   initialItems:
-  - {fileID: 11400000, guid: 5a83de9ebd0e8fd45b6cfa50644b7c43, type: 2}
   - {fileID: 11400000, guid: af6fccf07f90ea04085ce51e7067bb42, type: 2}
-  - {fileID: 11400000, guid: 396f0cf805228b94d99a43e679c3e8c7, type: 2}
 --- !u!4 &323020901
 Transform:
   m_ObjectHideFlags: 0
@@ -2614,9 +2616,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: ce457c8c0bdd7dd48aa834d6f2bb244b, type: 3}
     m_FontSize: 64
     m_FontStyle: 2
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 48
-    m_MaxSize: 72
+    m_MaxSize: 64
     m_Alignment: 5
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -3039,6 +3041,7 @@ MonoBehaviour:
   mouseController: {fileID: 806970628}
   inventoryChanged: {fileID: 11400000, guid: 8a75974fbeedc114696f27aef5af8ca1, type: 2}
   petBornEvent: {fileID: 11400000, guid: a296a1030e2db244d867d5015eb2aac0, type: 2}
+  petDiedEvent: {fileID: 11400000, guid: 22b9ea8c9c99887409c3fbbd7bacfa4c, type: 2}
   itemPrototype: {fileID: 7304489114056529248, guid: 62a72a98fc5dab744a518c2a24f76aff, type: 3}
   userInventory: {fileID: 323020900}
 --- !u!114 &522053158
@@ -3509,7 +3512,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 604341042}
-  m_LocalRotation: {x: -0.026884237, y: 0.00000000930986, z: 2.50379e-10, w: 0.99963856}
+  m_LocalRotation: {x: -0.026884237, y: -0.00000000930986, z: -2.50379e-10, w: 0.99963856}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3710,7 +3713,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4096
   tool: 2
 --- !u!114 &630671201
 MonoBehaviour:
@@ -3959,6 +3962,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 652941284}
+  - component: {fileID: 652941285}
   m_Layer: 0
   m_Name: Items
   m_TagString: Untagged
@@ -3980,6 +3984,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &652941285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652941283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d50f0744c4dbb68448fafcb2ac9921cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &653697061
 GameObject:
   m_ObjectHideFlags: 0
@@ -4121,7 +4137,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 671451097}
-  m_LocalRotation: {x: 0.14869599, y: -0.000000014735506, z: 0.0000000022157431, w: 0.98888296}
+  m_LocalRotation: {x: 0.14869599, y: 0.000000014735506, z: -0.0000000022157431, w: 0.98888296}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -4790,10 +4806,12 @@ MonoBehaviour:
   info: {fileID: 2064193716}
   backgroundElementColor: {r: 0.95, g: 0.95, b: 0.95, a: 1}
   selectedElementColor: {r: 0.5803922, g: 0.6862745, b: 0.4627451, a: 1}
-  numberItemsForSale: 1
+  numberItemsForSale: 4
   availableItems:
   - {fileID: 11400000, guid: af6fccf07f90ea04085ce51e7067bb42, type: 2}
   - {fileID: 11400000, guid: 5a83de9ebd0e8fd45b6cfa50644b7c43, type: 2}
+  - {fileID: 11400000, guid: 26f93116261765c498d414c186693501, type: 2}
+  - {fileID: 11400000, guid: 7d1a7e73bffa1ea46b39d67994cdbf8e, type: 2}
   essentialItems:
   - {fileID: 11400000, guid: 396f0cf805228b94d99a43e679c3e8c7, type: 2}
 --- !u!114 &767294350
@@ -7426,7 +7444,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1055184812}
-  m_LocalRotation: {x: -0.040701885, y: -0.000000029777631, z: -0.0000000012130108, w: 0.9991714}
+  m_LocalRotation: {x: -0.04070187, y: -0.0000000069176966, z: -2.8179667e-10, w: 0.9991714}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -10856,6 +10874,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   petBornEvent: {fileID: 11400000, guid: a296a1030e2db244d867d5015eb2aac0, type: 2}
+  petDiedEvent: {fileID: 11400000, guid: 22b9ea8c9c99887409c3fbbd7bacfa4c, type: 2}
 --- !u!114 &1708659392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12019,6 +12038,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 652941285}
+        m_TargetAssemblyTypeName: ResetController, Assembly-CSharp
+        m_MethodName: RemoveChildren
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1708659387}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1945769777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12815,7 +12858,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2138651603}
-  m_LocalRotation: {x: -0.04070192, y: -0.000000029784589, z: -0.0000000012127279, w: 0.9991714}
+  m_LocalRotation: {x: -0.040701877, y: -0.000000006957816, z: -2.8016237e-10, w: 0.9991714}
   m_LocalPosition: {x: 0, y: 1.4, z: -1.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []

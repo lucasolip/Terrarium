@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{60376337-F5CD-B2BD-0726-559C8AFADFAD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -63,8 +64,9 @@
     <Compile Include="Assets\Scripts\Simulation\Pet\States\SickMood.cs" />
     <Compile Include="Assets\Scripts\Utils\LeanTween\Framework\LeanTweenExt.cs" />
     <Compile Include="Assets\Scripts\Simulation\Terrain\FertileBlock.cs" />
-    <Compile Include="Assets\Scripts\Utils\LeanTween\Examples\Scripts\TestingUnitTests.cs" />
+    <Compile Include="Assets\Scripts\Simulation\ParticlePlayer.cs" />
     <Compile Include="Assets\Scripts\Utils\LeanTween\Framework\LTSeq.cs" />
+    <Compile Include="Assets\Scripts\Utils\LeanTween\Examples\Scripts\TestingUnitTests.cs" />
     <Compile Include="Assets\Scripts\Utils\LeanTween\Examples\Scripts\GeneralUISpace.cs" />
     <Compile Include="Assets\Scripts\System\Events\PetChangeEventListener.cs" />
     <Compile Include="Assets\Scripts\System\Events\PetBornEventListener.cs" />
@@ -103,8 +105,10 @@
     <Compile Include="Assets\Scripts\Utils\LeanTween\Examples\Scripts\TestingZLegacyExt.cs" />
     <Compile Include="Assets\Scripts\Items\Tools\ToolController.cs" />
     <Compile Include="Assets\Scripts\UI\Tools\AxeDestructible.cs" />
+    <Compile Include="Assets\Scripts\System\Audio\AudioPlayer.cs" />
     <Compile Include="Assets\Scripts\Items\ItemController.cs" />
     <Compile Include="Assets\Scripts\Utils\LeanTween\Examples\Scripts\PathBezier2d.cs" />
+    <Compile Include="Assets\Scripts\UI\Tools\PickaxeDestructible.cs" />
     <Compile Include="Assets\Scripts\UI\ItemElementUI.cs" />
     <Compile Include="Assets\Scripts\Utils\LeanTween\Framework\LTDescrOptional.cs" />
     <Compile Include="Assets\Scripts\Utils\LeanTween\Examples\Scripts\GeneralEasingTypes.cs" />
@@ -135,6 +139,7 @@
     <Compile Include="Assets\Scripts\System\Audio\UIAudioManager.cs" />
     <Compile Include="Assets\Scripts\System\Events\UIAudioEventListener.cs" />
     <Compile Include="Assets\Scripts\Utils\LeanTween\Examples\Scripts\PathSpline.cs" />
+    <Compile Include="Assets\Scripts\System\Persistence\ResetController.cs" />
     <Compile Include="Assets\Scripts\System\Events\PetChangeEvent.cs" />
     <Compile Include="Assets\Scripts\Simulation\Pet\States\AsleepMood.cs" />
     <Compile Include="Assets\Scripts\Utils\LeanTween\Examples\Scripts\GeneralAdvancedTechniques.cs" />
@@ -171,7 +176,9 @@
     <Compile Include="Assets\Scripts\Simulation\Plants\FruitTree.cs" />
     <Compile Include="Assets\Scripts\Utils\LeanTween\Examples\Archived\TestingRigidbodyCS.cs" />
     <Compile Include="Assets\Scripts\Utils\LeanTween\Examples\Scripts\Following.cs" />
-    <Compile Include="Assets\Scripts\UI\Tools\PickaxeDestructible.cs" />
+    <Compile Include="Assets\Scripts\UI\Tools\ShovelAction.cs" />
+    <Compile Include="Assets\Scripts\System\Events\PetDiedEvent.cs" />
+    <Compile Include="Assets\Scripts\System\Events\PetDiedEventListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

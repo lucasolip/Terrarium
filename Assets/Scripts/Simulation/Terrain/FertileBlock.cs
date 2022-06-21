@@ -2,17 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FertileBlock : MonoBehaviour, TickEventListener, TerrainBlock
+public class FertileBlock : TerrainBlock, TickEventListener
 {
     public TickEvent tickEvent;
     public bool wet = true;
-    public TerrainController terrain;
-    public int x, y;
     public Grass grass;
     public TreeModel tree;
 
-    public void Water() {
+    private void Start()
+    {
+        tickEvent.tickEvent += OnTick;
+    }
+
+    public override void Water() {
         wet = true;
+    }
+
+    public bool Plant(GameObject plantPrefab)
+    {
+        return terrain.Plant(plantPrefab, this);
     }
 
     public void PlantNeighbour(GameObject grassGameObject)
@@ -20,8 +28,12 @@ public class FertileBlock : MonoBehaviour, TickEventListener, TerrainBlock
         Quaternion rotation = (terrain.rotateGrass) ? Quaternion.Euler(0, Random.Range(0f, 360f), 0) : Quaternion.identity;
         Grass seed = Instantiate(grassGameObject, grassGameObject.transform.position,
                 rotation).GetComponent<Grass>();
-        int randomX = 2 * Random.Range(0, 2) - 1;
-        int randomY = 2 * Random.Range(0, 2) - 1;
+        int randomX = Random.Range(-1, 2);
+        int randomY = Random.Range(-1, 2);
+        if (randomX == 0 && randomY == 0) {
+            Destroy(seed.gameObject);
+            return;
+        }
         terrain.Plant(x + randomX, y + randomY, seed);
     }
 
@@ -31,12 +43,7 @@ public class FertileBlock : MonoBehaviour, TickEventListener, TerrainBlock
         Debug.Log("Fertile block tick");
     }
 
-    private void OnEnable()
-    {
-        tickEvent.tickEvent += OnTick;
-    }
-
-    private void OnDisable()
+    private void OnDestroy()
     {
         tickEvent.tickEvent -= OnTick;
     }

@@ -5,6 +5,8 @@ using UnityEditor;
 
 public class TerrainController : MonoBehaviour, TickEventListener {
     public TickEvent tickEvent;
+    public InventoryController userInventory;
+    public ItemUI itemUI;
     [HideInInspector]
     public TerrainBlock[,] blocks;
     [Header("Generation settings")]
@@ -42,6 +44,9 @@ public class TerrainController : MonoBehaviour, TickEventListener {
                 chosenBlock = (Random.Range(0f, 1f) < fertileChance) ? fertileBlock : barrenBlock;
                 blockGameobject = Instantiate(chosenBlock, transform.position + new Vector3(x, 0, y), Quaternion.identity, transform);
                 blocks[i, j] = blockGameobject.GetComponent<TerrainBlock>();
+                blocks[i, j].x = i;
+                blocks[i, j].y = j;
+                blocks[i, j].terrain = this;
                 if (chosenBlock == fertileBlock) InitializeFertileBlock(i, j);
             }
         }
@@ -49,9 +54,6 @@ public class TerrainController : MonoBehaviour, TickEventListener {
 
     void InitializeFertileBlock(int i, int j) {
         FertileBlock block = (FertileBlock)blocks[i, j];
-        block.x = i;
-        block.y = j;
-        block.terrain = this;
         if (Random.Range(0f, 1f) < grassChance) {
             Quaternion rotation = (rotateGrass) ? Quaternion.Euler(0, Random.Range(0f, 360f), 0) : Quaternion.identity;
             Grass seed = Instantiate(grassGameObject,
@@ -69,6 +71,30 @@ public class TerrainController : MonoBehaviour, TickEventListener {
             seed.transform.localScale = Vector3.one * Random.Range(minTreeSize, maxTreeSize);
             Plant(seed, block);
         }
+    }
+
+    public bool Plant(GameObject plantPrefab, FertileBlock block)
+    {
+        Plant plant = plantPrefab.GetComponent<Plant>();
+        if (plant is Grass && null == block.grass) {
+            Quaternion rotation = (rotateGrass) ? Quaternion.Euler(0, Random.Range(0f, 360f), 0) : Quaternion.identity;
+            Grass seed = Instantiate(grassGameObject,
+                block.transform.position + new Vector3(0, 0.5f, 0),
+                rotation,
+                block.transform).GetComponent<Grass>();
+            Plant(seed, block);
+            return true;
+        }
+        if (plant is TreeModel && null == block.tree) {
+            TreeModel seed = Instantiate(plantPrefab,
+                block.transform.position + new Vector3(0, 0.5f, 0),
+                plantPrefab.transform.localRotation * Quaternion.Euler(0, Random.Range(0f, 360f), 0),
+                block.transform).GetComponent<TreeModel>();
+            seed.transform.localScale = Vector3.one * Random.Range(minTreeSize, maxTreeSize);
+            Plant(seed, block);
+            return true;
+        }
+        return false;
     }
 
     public void Plant(Plant seed, FertileBlock block) {
@@ -117,12 +143,12 @@ public class TerrainController : MonoBehaviour, TickEventListener {
                     Quaternion.identity, 
                     transform);
                 blocks[i, j] = blockGameobject.GetComponent<TerrainBlock>();
+                blocks[i, j].x = i;
+                blocks[i, j].y = j;
+                blocks[i, j].terrain = this;
                 if (chosenBlock == fertileBlock) {
                     FertileBlock block = (FertileBlock)blocks[i, j];
-                    block.x = i;
-                    block.y = j;
                     block.wet = data.blocks[i, j].wet;
-                    block.terrain = this;
                     if (data.grass[i, j].exists) {
                         Grass seed = Instantiate(grassGameObject,
                             data.grass[i, j].position,
@@ -153,7 +179,7 @@ public class TerrainController : MonoBehaviour, TickEventListener {
         foreach (TerrainBlock block in blocks) {
             if (block is FertileBlock) {
                 FertileBlock fblock = (FertileBlock)block;
-                if (fblock.grass != null) fblock.grass.Chop();
+                if (fblock.grass != null) fblock.grass.CleanChop();
                 if (fblock.tree != null) fblock.tree.Chop();
                 Destroy(fblock);
             }
@@ -169,6 +195,25 @@ public class TerrainController : MonoBehaviour, TickEventListener {
                 return treeGameobject;
         }
         return null;
+    }
+
+    public void FertilizeBlock(BarrenBlock block)
+    {
+        GameObject blockGameObject = block.gameObject;
+        MeshRenderer meshRenderer = blockGameObject.GetComponent<MeshRenderer>();
+        MeshRenderer meshRendererFertile = this.fertileBlock.GetComponent<MeshRenderer>();
+        meshRenderer.material = meshRendererFertile.sharedMaterial;
+        FertileBlock fertileBlockComponent = blockGameObject.AddComponent<FertileBlock>();
+        fertileBlockComponent.tickEvent = tickEvent; 
+        fertileBlockComponent.x = block.x;
+        fertileBlockComponent.y = block.y;
+        fertileBlockComponent.terrain = this;
+        blocks[block.x, block.y] = fertileBlockComponent;
+    }
+
+    public void FoundMoney(int quantity)
+    {
+        userInventory.AddMoney(quantity);
     }
 
     public void OnTick() {

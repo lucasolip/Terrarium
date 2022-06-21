@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 477572793403504732}
   - component: {fileID: 3878490397071808281}
   - component: {fileID: 1006137800925805317}
+  - component: {fileID: 7072923826046221481}
   m_Layer: 12
   m_Name: DirtBlock
   m_TagString: Untagged
@@ -109,10 +110,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92ecc6532699d2e48ada623f5fc522d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tickEvent: {fileID: 11400000, guid: 47e4691a371a46447aeb678656c37a19, type: 2}
-  wet: 0
   terrain: {fileID: 0}
   x: 0
   y: 0
+  tickEvent: {fileID: 11400000, guid: 47e4691a371a46447aeb678656c37a19, type: 2}
+  wet: 0
   grass: {fileID: 0}
   tree: {fileID: 0}
+--- !u!114 &7072923826046221481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4851312451639005599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39b1709d41446b84a9bff9e81e212334, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

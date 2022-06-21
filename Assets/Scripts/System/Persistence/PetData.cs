@@ -7,8 +7,10 @@ public class PetData
     string petName;
     DateTime bornTime;
     int stageIndex;
+    bool dead;
 
-    public PetData(PetController pet) {
+    public PetData(PetController pet, bool dead) {
+        this.dead = dead;
         hunger = pet.hunger;
         energy = pet.energy;
         happiness = pet.happiness;
@@ -26,5 +28,10 @@ public class PetData
         pet.petName = petName;
         pet.bornTime = bornTime;
         pet.stage = (PetStage)ScriptableObjectLocator.Get(stageIndex);
+    }
+
+    public bool IsDead()
+    {
+        return dead;
     }
 }

@@ -101,8 +101,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tickEvent: {fileID: 11400000, guid: 47e4691a371a46447aeb678656c37a19, type: 2}
   petChangeEvent: {fileID: 11400000, guid: 1b947132c22a56c4b9a691a072df71ba, type: 2}
+  petDiedEvent: {fileID: 11400000, guid: 22b9ea8c9c99887409c3fbbd7bacfa4c, type: 2}
   petName: Pepito
   stage: {fileID: 11400000, guid: 84562b29ee4aa4f4693dea9891361dcf, type: 2}
+  deadPrefab: {fileID: 4676070018496403552, guid: 6ed1fea6e9e322f43bcf7864dd8460d3, type: 3}
   hunger: 100
   happiness: 100
   cleanliness: 100

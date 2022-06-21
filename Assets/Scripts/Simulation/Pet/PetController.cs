@@ -5,6 +5,7 @@ public class PetController : MonoBehaviour, TickEventListener
 {
     public TickEvent tickEvent;
     public PetChangeEvent petChangeEvent;
+    public PetDiedEvent petDiedEvent;
     public string petName;
     public PetMood mood;
     public PetStage stage;
@@ -20,13 +21,14 @@ public class PetController : MonoBehaviour, TickEventListener
     public GameObject poopPrefab;
 
     private Material material;
+    private bool dead = false;
 
-    public void Awake()
+    public void Start()
     {
-        bornTime = DateTime.Now;
         mood = new FineMood();
         material = GetComponent<Renderer>().sharedMaterial;
         mood.OnEnter(stage, null, material);
+        tickEvent.tickEvent += OnTick;
     }
 
     public void OnTick()
@@ -40,10 +42,13 @@ public class PetController : MonoBehaviour, TickEventListener
         }
         petChangeEvent.Raise(hunger, energy, happiness, cleanliness);
         PetStage nextStage = stage.Update();
-        if (null != nextStage) stage = nextStage;
+        if (null != nextStage){
+            stage = nextStage;
+            material.mainTexture = mood.GetModel(stage);
+        }
         ClampParameters();
         if (poops > 0 && Random.Range(0f,1f) > .8f) Poop();
-        SaveSystem.SavePet(this);
+        if (!dead) SaveSystem.SavePet(this, false);
     }
 
     public void CheckMood() {
@@ -66,9 +71,11 @@ public class PetController : MonoBehaviour, TickEventListener
 
     public void Die()
     {
-        // Instantiate pet angel prefab
+        dead = true;
+        tickEvent.tickEvent -= OnTick;
+        SaveSystem.SavePet(this, true);
         Debug.Log("Pet died :(");
-        Destroy(gameObject);
+        petDiedEvent.Raise(this);
     }
 
     private void Poop() {
@@ -81,13 +88,5 @@ public class PetController : MonoBehaviour, TickEventListener
     private void OnApplicationQuit()
     {
         stage.currentAge = 0;
-    }
-
-    private void OnEnable() {
-        tickEvent.tickEvent += OnTick;
-    }
-
-    private void OnDisable() {
-        tickEvent.tickEvent -= OnTick;
     }
 }

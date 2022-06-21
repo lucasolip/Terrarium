@@ -29,4 +29,9 @@ public class SadMood : PetMood {
         }
         return null;
     }
+
+    public override Texture GetModel(PetStage stage)
+    {
+        return stage.sadModel;
+    }
 }

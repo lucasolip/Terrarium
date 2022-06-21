@@ -17,6 +17,8 @@ MonoBehaviour:
   description: Fruta bastante completa que mejora el estado general de la mascota
   price: 15
   model: {fileID: 2800000, guid: d868262b535263d4b8bd52bdbd30e886, type: 3}
-  hunger: 50
-  energy: 50
-  happiness: 50
+  isPlantable: 1
+  plantPrefab: {fileID: 2972072396837929554, guid: 081cadb026e018e42b2abb968cbb32a8, type: 3}
+  hunger: 35
+  energy: 5
+  happiness: 30

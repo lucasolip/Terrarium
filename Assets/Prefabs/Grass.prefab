@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 4771363913717096504}
   - component: {fileID: 3632973296278968250}
   - component: {fileID: -1177080632520304325}
+  - component: {fileID: 7281618995297569005}
+  - component: {fileID: -3495296478045367537}
   m_Layer: 7
   m_Name: Grass
   m_TagString: Untagged
@@ -103,6 +105,8 @@ MonoBehaviour:
   tallScale: {x: 100, y: 100, z: 100}
   reproduceAge: 4
   growAge: 2
+  moneyChance: 0.1
+  moneyQuantity: 1
   isTall: 0
   age: 0
 --- !u!65 &3632973296278968250
@@ -130,3 +134,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b84729cc42c7a743b4b968ec2c96129, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7281618995297569005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5689774636140895599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d026b1bd24bafcc44ae3457b33796d30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleSystems:
+  - {fileID: 8303830246652286965, guid: f648961d534d39147b92fee561b5fb51, type: 3}
+  - {fileID: 6899540623100986891, guid: d38a4574a5bb9ae479b8013bdb455eb0, type: 3}
+--- !u!114 &-3495296478045367537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5689774636140895599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 411cd802731b54a4f9c75932c513f989, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 2a7fd5ec4ffdc8d41a3626c8bf5e3dbb, type: 3}

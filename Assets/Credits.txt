@@ -1,5 +1,5 @@
 Sprites and UI:
-	Bar UI: https://opengameart.org/content/minimalist-bar-system-0
+	Food Pack: https://henrysoftware.itch.io/pixel-food
 Materials
 	Stylized Grass 3: https://3dtextures.me/2021/03/19/stylized-grass-003/
 	Stylized Rocks: https://3dtextures.me/2020/07/07/stylized-rocks-001/
@@ -9,3 +9,6 @@ Shaders
 Sound
 	Swoosh: https://freesound.org/people/Brsjak/sounds/482880/
 	Bubble pop: https://freesound.org/people/onikage22/sounds/240566/
+	Eat: https://freesound.org/people/InspectorJ/sounds/412068/
+	Coins: 
+	Pruning: https://freesound.org/people/Mirandat7/sounds/614997/ 
