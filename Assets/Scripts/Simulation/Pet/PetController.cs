@@ -26,7 +26,7 @@ public class PetController : MonoBehaviour, TickEventListener
     public void Start()
     {
         mood = new FineMood();
-        material = GetComponent<Renderer>().sharedMaterial;
+        material = GetComponent<Renderer>().material;
         mood.OnEnter(stage, null, material);
         tickEvent.tickEvent += OnTick;
     }

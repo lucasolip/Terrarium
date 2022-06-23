@@ -8,6 +8,7 @@ public class PetParametersUI : MonoBehaviour, PetChangeEventListener, PetBornEve
 {
     public PetChangeEvent petChangeEvent;
     public PetBornEvent petBornEvent;
+    public PetDiedEvent petDiedEvent;
     private RectTransform hungerBar;
     private RectTransform energyBar;
     private RectTransform happinessBar;
@@ -19,6 +20,7 @@ public class PetParametersUI : MonoBehaviour, PetChangeEventListener, PetBornEve
 
     private void Awake() {
         petBornEvent.petBornEvent += OnPetBorn;
+        petDiedEvent.petDiedEvent += OnPetDied;
         bars = transform.GetChild(0).GetComponent<RectTransform>();
         bars.gameObject.SetActive(shown);
         hungerBar = bars.GetChild(0).Find("Foreground").GetComponent<RectTransform>();
@@ -74,10 +76,15 @@ public class PetParametersUI : MonoBehaviour, PetChangeEventListener, PetBornEve
 
     private void OnDestroy() {
         petBornEvent.petBornEvent -= OnPetBorn;
+        petDiedEvent.petDiedEvent -= OnPetDied;
     }
 
     public void OnPetBorn(PetController pet) {
         gameObject.SetActive(true);
+    }
+
+    public void OnPetDied(PetController pet) {
+        gameObject.SetActive(false);
     }
 
     public void OnPetChange(int hunger, int energy, int happiness, int cleanliness)

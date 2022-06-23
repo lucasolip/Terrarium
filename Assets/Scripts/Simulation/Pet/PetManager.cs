@@ -60,8 +60,8 @@ public class PetManager : MonoBehaviour, PetDiedEventListener
 
     public void OnPetDied(PetController pet)
     {
-        Destroy(pet.gameObject);
         pets.Remove(pet);
+        Destroy(pet.gameObject);
         Instantiate(deadGameobject, pet.transform.position, Quaternion.identity, transform);
     }
 

@@ -46,8 +46,10 @@ public class ItemUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler,
                 items.Add(pair.Key);
                 itemQuantities.Add(pair.Value);
             }
-            SetIcon(items[0].model);
-            quantity.text = itemQuantities[0].ToString();
+            if (items.Count > 0) {
+                SetIcon(items[0].model);
+                quantity.text = itemQuantities[0].ToString();
+            }
         }
     }
 

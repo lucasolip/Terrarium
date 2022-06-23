@@ -8,6 +8,7 @@ public static class SaveSystem
 {
     private static string petPath = "/pet.save";
     private static string terrainPath = "/terrain.save";
+    private static string inventoryPath = "/inventory.save";
 
     public static void SavePet(PetController pet, bool dead) {
         BinaryFormatter formatter = new BinaryFormatter();
@@ -26,6 +27,17 @@ public static class SaveSystem
         FileStream file = new FileStream(path, FileMode.Create);
 
         TerrainData data = new TerrainData(terrain);
+        formatter.Serialize(file, data);
+        file.Close();
+        Debug.Log("Terrain data saved.");
+    }
+
+    public static void SaveInventory(InventoryController inventory) {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + inventoryPath;
+        FileStream file = new FileStream(path, FileMode.Create);
+
+        InventoryData data = new InventoryData(inventory);
         formatter.Serialize(file, data);
         file.Close();
         Debug.Log("Terrain data saved.");
@@ -57,6 +69,19 @@ public static class SaveSystem
         return null;
     }
 
+    public static InventoryData LoadInventory() {
+        string path = Application.persistentDataPath + inventoryPath;
+        if (File.Exists(path)) {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream file = new FileStream(path, FileMode.Open);
+            InventoryData data = (InventoryData)formatter.Deserialize(file);
+            file.Close();
+            Debug.Log("Inventory data loaded.");
+            return data;
+        }
+        return null;
+    }
+
     public static void ResetPet() {
         string path = Application.persistentDataPath + petPath;
         if (File.Exists(path)) File.Delete(path);
@@ -64,6 +89,11 @@ public static class SaveSystem
 
     public static void ResetTerrain() {
         string path = Application.persistentDataPath + terrainPath;
+        if (File.Exists(path)) File.Delete(path);
+    }
+
+    public static void ResetInventory() {
+        string path = Application.persistentDataPath + inventoryPath;
         if (File.Exists(path)) File.Delete(path);
     }
 

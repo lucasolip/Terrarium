@@ -22,6 +22,9 @@ public class FineMood : PetMood {
         if (pet.hunger < sadThreshold || pet.happiness < sadThreshold) {
             return new SadMood();
         }
+        if (pet.poops > stage.maxPoops) {
+            return new SickMood();
+        }
         return null;
     }
 
