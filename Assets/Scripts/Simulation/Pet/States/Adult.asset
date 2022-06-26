@@ -19,11 +19,11 @@ MonoBehaviour:
   sickModel: {fileID: 2800000, guid: 6a891e0c6290db440852f6fcd8f25c6e, type: 3}
   asleepModel: {fileID: 2800000, guid: e177f7efff3ca604a89c8fc82f0d6117, type: 3}
   poopsPerMeal: 1
-  hungerPerTick: 10
-  happinessPerTick: 10
+  hungerPerTick: 2
+  happinessPerTick: 2
   energyPerTick: 5
   energyRecoveryAsleep: 10
-  currentAge: 0
-  stageTime: 30
+  stageTime: -1
   maxPoops: 3
-  sickTime: 5
+  sickTime: 30
+  timeToGetSick: 10

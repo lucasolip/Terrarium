@@ -7,6 +7,7 @@ public class TreeModel : Plant
     public int treeIndex = 0;
     public GameObject foodGameobject;
     public TreeStage stage;
+    public int timeBetweenFruitGrowth = 30;
     int growingTime = 0;
     GameObject treeView;
 
@@ -21,7 +22,7 @@ public class TreeModel : Plant
 
     public override void OnTick()
     {
-        Debug.Log("Tree tick");
+        //Debug.Log("Tree tick");
         growingTime++;
         if (stage.stageTime > 0 && growingTime > stage.stageTime) {
             stage = stage.nextStage;

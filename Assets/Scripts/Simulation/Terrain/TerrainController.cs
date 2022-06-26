@@ -14,6 +14,7 @@ public class TerrainController : MonoBehaviour, TickEventListener {
     public GameObject barrenBlock;
     public GameObject grassGameObject;
     public GameObject[] treesGameObjects;
+    public int initialSize = 8;
     public int size = 16;
     public int blockSpacing = 2;
     [Range(0f, 1f)]
@@ -27,7 +28,6 @@ public class TerrainController : MonoBehaviour, TickEventListener {
     public float minTreeSize = 75;
     public float maxTreeSize = 125;
     private void Awake() {
-        blocks = new TerrainBlock[size, size];
         TerrainData data = SaveSystem.LoadTerrain();
         if (data != null)
             LoadTerrain(data);
@@ -36,20 +36,24 @@ public class TerrainController : MonoBehaviour, TickEventListener {
     }
 
     void Generate() {
-        GameObject blockGameobject;
-        GameObject chosenBlock;
+        size = initialSize;
+        blocks = new TerrainBlock[size, size];
         int halfSize = Mathf.FloorToInt(size * blockSpacing * .5f);
         for (int x = -halfSize, i = 0; x < halfSize; x += blockSpacing, i++) {
             for (int y = -halfSize, j = 0; y < halfSize; y += blockSpacing, j++) {
-                chosenBlock = (Random.Range(0f, 1f) < fertileChance) ? fertileBlock : barrenBlock;
-                blockGameobject = Instantiate(chosenBlock, transform.position + new Vector3(x, 0, y), Quaternion.identity, transform);
-                blocks[i, j] = blockGameobject.GetComponent<TerrainBlock>();
-                blocks[i, j].x = i;
-                blocks[i, j].y = j;
-                blocks[i, j].terrain = this;
-                if (chosenBlock == fertileBlock) InitializeFertileBlock(i, j);
+                GenerateBlock(i, j, x, y, true);
             }
         }
+    }
+
+    void GenerateBlock(int i, int j, int x, int y, bool plantBlock) {
+        GameObject chosenBlock = (Random.Range(0f, 1f) < fertileChance) ? fertileBlock : barrenBlock;
+        GameObject blockGameobject = Instantiate(chosenBlock, transform.position + new Vector3(x, 0, y), Quaternion.identity, transform);
+        blocks[i, j] = blockGameobject.GetComponent<TerrainBlock>();
+        blocks[i, j].x = i;
+        blocks[i, j].y = j;
+        blocks[i, j].terrain = this;
+        if (plantBlock && chosenBlock == fertileBlock) InitializeFertileBlock(i, j);
     }
 
     void InitializeFertileBlock(int i, int j) {
@@ -132,6 +136,7 @@ public class TerrainController : MonoBehaviour, TickEventListener {
 
     void LoadTerrain(TerrainData data) {
         size = data.size;
+        blocks = new TerrainBlock[size, size];
         GameObject blockGameobject;
         GameObject chosenBlock;
         int halfSize = Mathf.FloorToInt(size * blockSpacing * .5f);
@@ -214,6 +219,31 @@ public class TerrainController : MonoBehaviour, TickEventListener {
     public void FoundMoney(int quantity)
     {
         userInventory.AddMoney(quantity);
+    }
+
+    public void Expand()
+    {
+        int newSize = size + 2;
+        TerrainBlock[,] newBlocks = new TerrainBlock[newSize, newSize];
+        for (int i = 1; i <= size; i++) {
+            for (int j = 1; j <= size; j++) {
+                newBlocks[i, j] = blocks[i - 1, j - 1];
+                newBlocks[i, j].x = i;
+                newBlocks[i, j].y = j;
+            }
+        }
+        size = newSize;
+        blocks = newBlocks;
+        int halfSize = Mathf.FloorToInt(size * blockSpacing * .5f);
+        for (int x = -halfSize, i = 0; x < halfSize; x += blockSpacing, i++)
+            GenerateBlock(i, 0, x, -halfSize, false);
+        for (int x = -halfSize, i = 0; x < halfSize; x += blockSpacing, i++)
+            GenerateBlock(i, newSize-1, x, halfSize - blockSpacing, false);
+        for (int y = -halfSize, j = 0; y < halfSize; y += blockSpacing, j++)
+            GenerateBlock(0, j, -halfSize, y, false);
+        for (int y = -halfSize, j = 0; y < halfSize; y += blockSpacing, j++)
+            GenerateBlock(newSize - 1, j, halfSize - blockSpacing, y, false);
+        SaveSystem.SaveTerrain(this);
     }
 
     public void OnTick() {

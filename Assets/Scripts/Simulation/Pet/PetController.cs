@@ -20,6 +20,7 @@ public class PetController : MonoBehaviour, TickEventListener
     public float poopDistance = 1f;
     public GameObject poopPrefab;
 
+    private int age;
     private Material material;
     private bool dead = false;
 
@@ -33,7 +34,7 @@ public class PetController : MonoBehaviour, TickEventListener
 
     public void OnTick()
     {
-        Debug.Log("Pet tick");
+        //Debug.Log("Pet tick");
         PetMood nextMood = mood.UpdateParameters(this, stage);
         if (null != nextMood) {
             PetMood previousMood = mood;
@@ -41,7 +42,7 @@ public class PetController : MonoBehaviour, TickEventListener
             mood.OnEnter(stage, previousMood, material);
         }
         petChangeEvent.Raise(hunger, energy, happiness, cleanliness);
-        PetStage nextStage = stage.Update();
+        PetStage nextStage = stage.Age(ref age);
         if (null != nextStage){
             stage = nextStage;
             material.mainTexture = mood.GetModel(stage);
@@ -72,7 +73,6 @@ public class PetController : MonoBehaviour, TickEventListener
     public void Die()
     {
         dead = true;
-        tickEvent.tickEvent -= OnTick;
         SaveSystem.SavePet(this, true);
         Debug.Log("Pet died :(");
         petDiedEvent.Raise(this);
@@ -85,8 +85,17 @@ public class PetController : MonoBehaviour, TickEventListener
             poopPrefab.transform.rotation, itemParent);
         poops -= 1;
     }
-    private void OnApplicationQuit()
+
+    public void SimulateGrowth()
     {
-        stage.currentAge = 0;
+        age = Mathf.FloorToInt((float)(DateTime.Now - bornTime).TotalSeconds / Clock._tickPeriod);
+        while (stage.nextStage != null && age > stage.stageTime) {
+            stage = stage.nextStage;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        tickEvent.tickEvent -= OnTick;
     }
 }

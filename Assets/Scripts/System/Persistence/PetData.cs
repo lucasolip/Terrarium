@@ -28,6 +28,7 @@ public class PetData
         pet.petName = petName;
         pet.bornTime = bornTime;
         pet.stage = (PetStage)ScriptableObjectLocator.Get(stageIndex);
+        pet.SimulateGrowth();
     }
 
     public bool IsDead()

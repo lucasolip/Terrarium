@@ -16,5 +16,5 @@ MonoBehaviour:
   fruit: {fileID: 0}
   nextStage: {fileID: 11400000, guid: 0829b23e7727971489938e514f6d44db, type: 2}
   ticksWithoutWater: -1
-  stageTime: 3
+  stageTime: 300
   isFruitTree: 0

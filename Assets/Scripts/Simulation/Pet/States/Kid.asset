@@ -23,7 +23,7 @@ MonoBehaviour:
   happinessPerTick: 1
   energyPerTick: 5
   energyRecoveryAsleep: 10
-  currentAge: 0
-  stageTime: 20
+  stageTime: 60
   maxPoops: 3
-  sickTime: 5
+  sickTime: 30
+  timeToGetSick: 10

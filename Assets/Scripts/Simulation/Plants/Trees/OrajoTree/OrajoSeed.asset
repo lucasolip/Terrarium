@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: OrajoSeed
   m_EditorClassIdentifier: 
   model: {fileID: 657234745030975567, guid: f394ec3ae0953874398d9e0f80c5e7e2, type: 3}
+  fruit: {fileID: 0}
   nextStage: {fileID: 11400000, guid: 27488dc92df8d46409a3849342a7db52, type: 2}
   ticksWithoutWater: -1
-  stageTime: 5
+  stageTime: 30
+  isFruitTree: 0

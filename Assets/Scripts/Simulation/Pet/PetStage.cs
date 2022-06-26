@@ -16,17 +16,16 @@ public class PetStage : ScriptableObject
     public int happinessPerTick;
     public int energyPerTick;
     public int energyRecoveryAsleep;
-    public int currentAge;
     public int stageTime;
     public int maxPoops;
     public int sickTime;
+    public int timeToGetSick;
 
-    public PetStage Update()
+    public PetStage Age(ref int age)
     {
-        currentAge++;
-        if (currentAge > stageTime)
+        age++;
+        if (age > stageTime && stageTime > 0)
         {
-            currentAge = 0;
             return nextStage;
         }
         return null;

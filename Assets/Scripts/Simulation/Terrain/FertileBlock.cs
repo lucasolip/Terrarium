@@ -40,7 +40,7 @@ public class FertileBlock : TerrainBlock, TickEventListener
     public void OnTick()
     {
         // TODO: After some number of ticks, wet blocks get dry
-        Debug.Log("Fertile block tick");
+        //Debug.Log("Fertile block tick");
     }
 
     private void OnDestroy()

@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class AxeDestructible : MouseHandler
 {
+    bool clicked = false;
+
     public override void Clicked()
     {
+        clicked = true;
     }
 
     public override void Dragged()
@@ -14,7 +17,7 @@ public class AxeDestructible : MouseHandler
 
     public override void Released()
     {
-        if (MouseController.selectedTool.tool == Tool.Axe) {
+        if (MouseController.selectedTool.tool == Tool.Axe && clicked) {
             Plant plant = GetComponent<Plant>();
             if (plant == null && transform.parent != null) 
                 plant = transform.parent.GetComponent<Plant>();
@@ -25,5 +28,6 @@ public class AxeDestructible : MouseHandler
                 Destroy(gameObject);
             }
         }
+        clicked = false;
     }
 }

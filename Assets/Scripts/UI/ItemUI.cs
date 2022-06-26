@@ -21,6 +21,7 @@ public class ItemUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler,
     Image foodIcon;
     TextMeshProUGUI quantity;
     bool mouseHeld = false;
+    bool petBorn = false;
 
     private void Awake()
     {
@@ -34,7 +35,6 @@ public class ItemUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler,
         inventoryChanged.itemAdded += OnItemAdded;
         inventoryChanged.itemChanged += OnItemChanged;
         inventoryChanged.itemRemoved += OnItemRemoved;
-        gameObject.SetActive(false);
     }
 
     private void Start()
@@ -51,6 +51,7 @@ public class ItemUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler,
                 quantity.text = itemQuantities[0].ToString();
             }
         }
+        if (!petBorn) gameObject.SetActive(false);
     }
 
     public ItemModel GetCurrentItem()
@@ -144,11 +145,13 @@ public class ItemUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler,
     }
 
     public void OnPetBorn(PetController pet) {
+        petBorn = true;
         gameObject.SetActive(true);
     }
 
     public void OnPetDied(PetController pet)
     {
+        petBorn = false;
         gameObject.SetActive(false);
     }
 

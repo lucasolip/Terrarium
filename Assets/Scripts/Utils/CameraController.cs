@@ -41,7 +41,7 @@ public class CameraController : MouseHandler
     public override void Dragged()
     {
         difference = Input.mousePosition - origin;
-        cam.m_XAxis.Value = difference.x * xSensitivity;
+        cam.m_XAxis.Value += difference.x * xSensitivity;
         cam.m_YAxis.Value -= difference.y * ySensitivity;
         cam.m_YAxis.Value = Mathf.Clamp(cam.m_YAxis.Value, minY, maxY);
         origin = Input.mousePosition;

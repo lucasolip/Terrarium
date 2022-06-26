@@ -134,8 +134,8 @@ MonoBehaviour:
   - {fileID: 3226123061114979726}
   - {fileID: 4605761696201609792}
   - {fileID: 5964196523616976297}
-  fruitGrowTime: 1
-  fruitRipeTime: 5
+  fruitGrowTime: 30
+  fruitRipeTime: 15
   fruitGrown: 0
 --- !u!136 &3966154310492857149
 CapsuleCollider:

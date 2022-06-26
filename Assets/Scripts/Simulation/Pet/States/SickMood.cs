@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SickMood : PetMood {
     public PetMood previousMood;
-    const int timeBeingSick = 7;
     int timeSick = 0;
     public override void OnEnter(PetStage stage, PetMood previousMood, Material material) {
         this.previousMood = previousMood;
@@ -12,10 +11,11 @@ public class SickMood : PetMood {
     }
 
     public override PetMood CheckMood(PetController pet, PetStage stage) {
+        Debug.Log("Sick check");
         if (pet.energy < 10) {
             return new AsleepMood();
         }
-        if (timeSick > timeBeingSick) pet.Die();
+        if (timeSick > stage.sickTime) pet.Die();
         return null;
     }
 

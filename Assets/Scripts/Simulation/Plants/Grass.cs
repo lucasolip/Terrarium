@@ -33,7 +33,7 @@ public class Grass : Plant
 
     public override void OnTick()
     {
-        Debug.Log("Grass tick");
+        //Debug.Log("Grass tick");
         age++;
         if (!isTall && age > growAge) {
             Grow();

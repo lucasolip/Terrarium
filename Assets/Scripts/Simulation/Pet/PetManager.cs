@@ -54,7 +54,7 @@ public class PetManager : MonoBehaviour, PetDiedEventListener
             petController.bornTime = System.DateTime.Now;
         }
         pets.Add(petController);
-        //GameObject.Find("CameraTarget").GetComponent<CameraTargetController>().target = pet.transform;
+        GameObject.Find("CameraTarget").GetComponent<CameraTargetController>().target = pet.transform;
         petBornEvent.Raise(petController);
     }
 
@@ -64,5 +64,4 @@ public class PetManager : MonoBehaviour, PetDiedEventListener
         Destroy(pet.gameObject);
         Instantiate(deadGameobject, pet.transform.position, Quaternion.identity, transform);
     }
-
 }
