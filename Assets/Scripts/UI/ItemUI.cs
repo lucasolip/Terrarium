@@ -5,33 +5,23 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
-public class ItemUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, 
-    IPointerExitHandler, PetBornEventListener, InventoryChangedEventListener, IPointerEnterHandler, PetDiedEventListener
+public class ItemUI : MonoBehaviour, InventoryChangedEventListener
 {
-    public MouseController mouseController;
     public InventoryChangedEvent inventoryChanged;
-    public PetBornEvent petBornEvent;
-    public PetDiedEvent petDiedEvent;
-    public GameObject itemPrototype;
     public InventoryController userInventory;
-    private UIAudioPlayer player;
-    private List<ItemModel> items;
+    [HideInInspector]
+    public List<ItemModel> items;
     private List<int> itemQuantities;
-    int currentIndex = 0;
+    public int currentIndex = 0;
     Image foodIcon;
     TextMeshProUGUI quantity;
-    bool mouseHeld = false;
-    bool petBorn = false;
 
     private void Awake()
     {
         foodIcon = transform.Find("FoodIcon").GetComponent<Image>();
         quantity = transform.Find("Quantity").GetComponent<TextMeshProUGUI>();
-        player = GetComponent<UIAudioPlayer>();
         items = new List<ItemModel>();
         itemQuantities = new List<int>();
-        petBornEvent.petBornEvent += OnPetBorn;
-        petDiedEvent.petDiedEvent += OnPetDied;
         inventoryChanged.itemAdded += OnItemAdded;
         inventoryChanged.itemChanged += OnItemChanged;
         inventoryChanged.itemRemoved += OnItemRemoved;
@@ -51,52 +41,11 @@ public class ItemUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler,
                 quantity.text = itemQuantities[0].ToString();
             }
         }
-        if (!petBorn) gameObject.SetActive(false);
     }
 
     public ItemModel GetCurrentItem()
     {
         return items[currentIndex];
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        mouseHeld = true;
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        eventData.pointerPress = gameObject;
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        mouseHeld = false;
-        MouseHandler handler = mouseController.selected;
-        ItemController item = null;
-        if (handler != null) item = handler.transform.GetComponent<ItemController>();
-        if (item != null) {
-            userInventory.AddItem(item.model);
-            player.Play(0);
-            Destroy(item.gameObject);
-            mouseController.selected = null;
-        }
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        eventData.pointerPress = null;
-        if (mouseHeld) InstantiateItem();
-        mouseHeld = false;
-    }
-
-    void InstantiateItem()
-    {
-        GameObject newFood = Instantiate(itemPrototype, MathUtils.GetXZPlaneIntersection(Input.mousePosition, .5f, Camera.main), Quaternion.identity);
-        newFood.GetComponent<Rigidbody>().isKinematic = false;
-        newFood.GetComponent<ItemController>().model = items[currentIndex];
-        newFood.GetComponent<MouseFollower>().enabled = true;
-        userInventory.RemoveItem(items[currentIndex]);
     }
 
     void SetIcon(Texture icon)
@@ -109,6 +58,16 @@ public class ItemUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler,
     void SetIcon(Sprite icon)
     {
         foodIcon.sprite = icon;
+    }
+
+    public void PickItem()
+    {
+        userInventory.RemoveItem(items[currentIndex]);
+    }
+
+    public bool IsEmpty()
+    {
+        return items.Count == 0;
     }
 
     public void NextElement()
@@ -137,22 +96,9 @@ public class ItemUI : MonoBehaviour, IPointerUpHandler, IPointerDownHandler,
     }
 
     private void OnDestroy() {
-        petBornEvent.petBornEvent -= OnPetBorn;
-        petDiedEvent.petDiedEvent -= OnPetDied;
         inventoryChanged.itemAdded -= OnItemAdded;
         inventoryChanged.itemChanged -= OnItemChanged;
         inventoryChanged.itemRemoved -= OnItemRemoved;
-    }
-
-    public void OnPetBorn(PetController pet) {
-        petBorn = true;
-        gameObject.SetActive(true);
-    }
-
-    public void OnPetDied(PetController pet)
-    {
-        petBorn = false;
-        gameObject.SetActive(false);
     }
 
     public void OnItemAdded(ItemModel item)

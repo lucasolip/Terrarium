@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DateTime = System.DateTime;
 
 public class PetManager : MonoBehaviour, PetDiedEventListener
 {
@@ -51,7 +52,7 @@ public class PetManager : MonoBehaviour, PetDiedEventListener
             data.LoadPet(petController);
         } else {
             petController.petName = petName;
-            petController.bornTime = System.DateTime.Now;
+            petController.bornTime = DateTime.Now;
         }
         pets.Add(petController);
         GameObject.Find("CameraTarget").GetComponent<CameraTargetController>().target = pet.transform;
@@ -63,5 +64,16 @@ public class PetManager : MonoBehaviour, PetDiedEventListener
         pets.Remove(pet);
         Destroy(pet.gameObject);
         Instantiate(deadGameobject, pet.transform.position, Quaternion.identity, transform);
+    }
+
+    public PetController CheckBestPet(int currentBest, PetController bestPet)
+    {
+        foreach (PetController pet in pets) {
+            if (bestPet != null && pet == bestPet) continue;
+            if (currentBest == 0 || (DateTime.Now - pet.bornTime).TotalSeconds > currentBest) {
+                return pet;
+            }
+        }
+        return null;
     }
 }

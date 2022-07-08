@@ -19,14 +19,18 @@ public class PetController : MonoBehaviour, TickEventListener
     public int poops = 0;
     public float poopDistance = 1f;
     public GameObject poopPrefab;
+    [Header("Sounds")]
+    public AudioClip eatingSound;
 
     private int age;
     private Material material;
     private bool dead = false;
+    private AudioSource audioSource;
 
     public void Start()
     {
         mood = new FineMood();
+        audioSource = GetComponent<AudioSource>();
         material = GetComponent<Renderer>().material;
         mood.OnEnter(stage, null, material);
         tickEvent.tickEvent += OnTick;
@@ -92,6 +96,11 @@ public class PetController : MonoBehaviour, TickEventListener
         while (stage.nextStage != null && age > stage.stageTime) {
             stage = stage.nextStage;
         }
+    }
+
+    public void PlaySound(AudioClip audioClip)
+    {
+        audioSource.PlayOneShot(audioClip);
     }
 
     private void OnDestroy()

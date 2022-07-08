@@ -5,10 +5,11 @@ using UnityEngine;
 public class EggController : MouseHandler
 {
     public NameUI inputField;
+    public string nameFieldTitle;
 
     private void Start() {
         inputField = GameObject.Find("NameField").GetComponent<NameUI>();
-        inputField.inputSent += OnInputSent;
+        
     }
 
     private void OnInputSent() {
@@ -19,6 +20,8 @@ public class EggController : MouseHandler
 
     public override void Clicked()
     {
+        inputField.inputSent += OnInputSent;
+        inputField.SetTitle(nameFieldTitle);
         inputField.Show();
     }
 

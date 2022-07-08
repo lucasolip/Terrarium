@@ -26,6 +26,7 @@ public abstract class PetMood
             pet.ClampParameters();
             pet.poops += pet.stage.poopsPerMeal;
             GameObject.Destroy(item.gameObject);
+            pet.PlaySound(pet.eatingSound);
         }
         pet.CheckMood();
     }

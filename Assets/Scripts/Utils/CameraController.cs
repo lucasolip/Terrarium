@@ -15,6 +15,7 @@ public class CameraController : MouseHandler
     public float minZoom = 1f;
     public float maxZoom = 10f;
     public float zoomSpeed = 1f;
+    public float mobileZoomSpeed = 0.001f;
     private Vector3 origin;
     private Vector3 difference;
     private Vector3 resetCamera;
@@ -28,27 +29,44 @@ public class CameraController : MouseHandler
 
     void LateUpdate()
     {
+#if UNITY_ANDROID
+        if (Input.touchCount >= 2) {
+            Touch tZero = Input.GetTouch(0);
+            Touch tOne = Input.GetTouch(1);
+            Vector2 tZeroPrevious = tZero.position - tZero.deltaPosition;
+            Vector2 tOnePrevious = tOne.position - tOne.deltaPosition;
+
+            float oldTouchDistance = Vector2.Distance (tZeroPrevious, tOnePrevious);
+            float currentTouchDistance = Vector2.Distance (tZero.position, tOne.position);
+
+            float deltaDistance = oldTouchDistance - currentTouchDistance;
+            cam.m_Lens.OrthographicSize = Mathf.Clamp(cam.m_Lens.OrthographicSize + deltaDistance * mobileZoomSpeed, minZoom, maxZoom);
+        }
+#else
         if (Input.GetAxis("Mouse ScrollWheel") != 0f) {
             cam.m_Lens.OrthographicSize = Mathf.Clamp(cam.m_Lens.OrthographicSize - Input.GetAxis("Mouse ScrollWheel") * zoomSpeed, minZoom, maxZoom);
         }
+#endif
     }
 
     public override void Clicked()
     {
-        origin = Input.mousePosition;
+        if (Input.touchCount < 2) origin = Input.mousePosition;
     }
 
     public override void Dragged()
     {
-        difference = Input.mousePosition - origin;
-        cam.m_XAxis.Value += difference.x * xSensitivity;
-        cam.m_YAxis.Value -= difference.y * ySensitivity;
-        cam.m_YAxis.Value = Mathf.Clamp(cam.m_YAxis.Value, minY, maxY);
-        origin = Input.mousePosition;
+        if (Input.touchCount < 2) {
+            difference = Input.mousePosition - origin;
+            cam.m_XAxis.Value += difference.x * xSensitivity;
+            cam.m_YAxis.Value -= difference.y * ySensitivity;
+            cam.m_YAxis.Value = Mathf.Clamp(cam.m_YAxis.Value, minY, maxY);
+            origin = Input.mousePosition;
+        }
     }
 
     public override void Released()
     {
-        origin = Input.mousePosition;
+        if (Input.touchCount < 2) origin = Input.mousePosition;
     }
 }

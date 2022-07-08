@@ -12,3 +12,4 @@ Sound
 	Eat: https://freesound.org/people/InspectorJ/sounds/412068/
 	Coins: 
 	Pruning: https://freesound.org/people/Mirandat7/sounds/614997/ 
+	Kenney (error_003, confirmation_002, maximize_008, minimize_008)

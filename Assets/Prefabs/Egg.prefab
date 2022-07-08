@@ -109,9 +109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffc5ff6f1f98db04baa0833aeb1a29fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  petBornEvent: {fileID: 11400000, guid: a296a1030e2db244d867d5015eb2aac0, type: 2}
-  petGameobject: {fileID: 1761338312932836929, guid: 357bbedc7682c1e46acf23b4d3c05089, type: 3}
   inputField: {fileID: 0}
+  nameFieldTitle: "\xBFC\xF3mo se llama?"
 --- !u!95 &1483079391720698076
 Animator:
   serializedVersion: 3

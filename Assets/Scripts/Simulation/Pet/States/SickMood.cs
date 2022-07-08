@@ -38,6 +38,7 @@ public class SickMood : PetMood {
             pet.energy += food.energy;
             pet.ClampParameters();
             pet.poops += pet.stage.poopsPerMeal;
+            pet.PlaySound(pet.eatingSound);
             GameObject.Destroy(item.gameObject);
         } else if (item.model.itemTag.Equals("Medicine")) {
             pet.mood = new FineMood();

@@ -8,6 +8,7 @@ public class Grass : Plant
     public GameObject grassGameobject;
     public Vector3 shortScale;
     public Vector3 tallScale;
+    public int timeBetweenReproduce;
     public int reproduceAge;
     public int growAge;
     [Header("Item settings")]
@@ -19,7 +20,8 @@ public class Grass : Plant
     private AudioPlayer audioPlayer;
 
     public bool isTall;
-    public int age = 0;
+    public int age;
+    private int lastReproduced;
     Collider objectCollider;
 
     private void Awake()
@@ -29,16 +31,18 @@ public class Grass : Plant
         objectCollider = GetComponent<Collider>();
         transform.localScale = shortScale;
         isTall = false;
+        lastReproduced = reproduceAge;
+        age = 0;
     }
 
     public override void OnTick()
     {
-        //Debug.Log("Grass tick");
         age++;
         if (!isTall && age > growAge) {
             Grow();
         }
-        if (age > reproduceAge) {
+        if (age > lastReproduced + timeBetweenReproduce) {
+            lastReproduced = age;
             Reproduce();
         }
     }

@@ -27,6 +27,10 @@ public class PetInfoUI : MonoBehaviour, PetBornEventListener, PetDiedEventListen
     }
 
     private void Update() {
+        if (pet == null) {
+            enabled = false;
+            gameObject.SetActive(false);
+        }
         petAge.text = "Edad: " + TimeFormatter.Format(DateTime.Now - dateBorn);
         petStage.text = "Etapa: " + pet.stage.stageName;
         image.texture = pet.stage.fineModel;

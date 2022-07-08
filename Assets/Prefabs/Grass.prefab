@@ -103,8 +103,9 @@ MonoBehaviour:
   grassGameobject: {fileID: 5689774636140895599}
   shortScale: {x: 100, y: 50, z: 100}
   tallScale: {x: 100, y: 100, z: 100}
-  reproduceAge: 300
-  growAge: 60
+  timeBetweenReproduce: 5
+  reproduceAge: 10
+  growAge: 10
   moneyChance: 0.1
   moneyQuantity: 1
   isTall: 0
