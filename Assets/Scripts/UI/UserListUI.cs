@@ -93,8 +93,8 @@ public class UserListUI : MonoBehaviour
     public void OnReceivedUserList(List<DatabaseUser> response)
     {
         database.receivedUserListEvent -= OnReceivedUserList;
-        if (response == null || response.Count == 0) return;
         ClearList();
+        if (response == null || response.Count == 0) return;
         UserListElementUI userElement;
         foreach (DatabaseUser user in response) {
             if (!this.user.username.Equals(user.username)) {

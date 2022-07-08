@@ -2771,7 +2771,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1920, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &268605816
@@ -3703,7 +3703,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 1979209.1}
+  m_AnchoredPosition: {x: 0, y: 2014153.6}
   m_SizeDelta: {x: 1596, y: 588}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &395905301
@@ -7252,7 +7252,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2050603824}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.5300947
+  m_Size: 0.5342287
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -7331,7 +7331,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 605755.5}
+  m_AnchoredPosition: {x: 0, y: 640700.56}
   m_SizeDelta: {x: 1596, y: 588}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &723392270
@@ -8757,7 +8757,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 1920, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &808128725
@@ -9758,7 +9758,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1814018770}
   m_HandleRect: {fileID: 1814018769}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -11647,7 +11647,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1055184812}
-  m_LocalRotation: {x: 0.110678904, y: -0.37520683, z: 0.04517784, w: 0.9192002}
+  m_LocalRotation: {x: 0.110678904, y: -0.37520686, z: 0.045177843, w: 0.9192002}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -12252,7 +12252,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1337253349}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.5300947
+  m_Size: 0.5342287
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
