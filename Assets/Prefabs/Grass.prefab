@@ -107,7 +107,7 @@ MonoBehaviour:
   reproduceAge: 10
   growAge: 10
   moneyChance: 0.1
-  moneyQuantity: 1
+  moneyQuantity: 5
   isTall: 0
   age: 0
 --- !u!65 &3632973296278968250

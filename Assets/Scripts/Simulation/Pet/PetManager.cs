@@ -25,8 +25,11 @@ public class PetManager : MonoBehaviour, PetDiedEventListener
         PetData data = SaveSystem.LoadPet();
         if (data != null) 
             CreatePet("", data);
-        else 
-            eggs.Add(Instantiate(eggGameobject, startPosition, Quaternion.identity, transform));
+        else
+        {
+            eggs.Add(Instantiate(eggGameobject, startPosition, eggGameobject.transform.localRotation, transform));
+            //eggs.Add(Instantiate(eggGameobject, startPosition + Vector3.forward*2f, eggGameobject.transform.localRotation, transform));
+        }
         petDiedEvent.petDiedEvent += OnPetDied;
     }
 
@@ -37,7 +40,7 @@ public class PetManager : MonoBehaviour, PetDiedEventListener
         pets.Clear();
         eggs.Clear();
         for (int i = 0; i < transform.childCount; i++) Destroy(transform.GetChild(i).gameObject);
-        eggs.Add(Instantiate(eggGameobject, startPosition, Quaternion.identity, transform));
+        eggs.Add(Instantiate(eggGameobject, startPosition, eggGameobject.transform.localRotation, transform));
     }
 
     public void CreatePet(string petName, PetData data) {
@@ -70,7 +73,7 @@ public class PetManager : MonoBehaviour, PetDiedEventListener
     {
         foreach (PetController pet in pets) {
             if (bestPet != null && pet == bestPet) continue;
-            if (currentBest == 0 || (DateTime.Now - pet.bornTime).TotalSeconds > currentBest) {
+            if (bestPet == null || currentBest == 0 || (DateTime.Now - pet.bornTime).TotalSeconds > currentBest) {
                 return pet;
             }
         }
